@@ -24,7 +24,7 @@
     PS C:\Users\ruoha> cd Documents
     ```
 
-    Or, start typing the folder’s name and press “Tab.” (The terminal will autocomplete the folder name.)
+    Or, start typing the folder’s name and press TAB. (The terminal will autocomplete the folder name.)
 
 9. Write the names of the next folders, each separated with a slash (/). It will be easier to use autocomplete on folder names.
 
@@ -32,11 +32,11 @@
     PS C:\Users\ruoha> cd '.\Documents\VSCode Projects\'
     ```
 
-10. Press “enter.” You’re now in the folder “VSCode Projects.”
+10. Press ENTER. You’re now in the folder “VSCode Projects.”
 
 11. Now, type `git clone` and a space.
 
-    Paste the HTTPS link from the repo, and press “enter.”
+    Paste the HTTPS link from the repo, and press ENTER.
 
     You’ll see the terminal say, “Cloning into ‘repo-name’...” and some statements with “done” at the end. This means a successful clone.
 
@@ -44,16 +44,53 @@
 
     Type `cd` and a space.
 
-    Then, type the name of the cloned repo. Press “enter.”
+    Then, type the name of the cloned repo. Press ENTER.
     Now that you’re in the repo’s folder, type `code .`
 
     Something like this (the example repo is named “easyu”):
 
-```
-PS C:\Users\ruoha\Documents\VSCode Projects\easyu> code .
-```
+    ```
+    PS C:\Users\ruoha\Documents\VSCode Projects\easyu> code .
+    ```
 
-13. Wait a few seconds. As long as you’ve followed all the steps prior, the code will open on VSCode.
+13. Press ENTER, and wait a few seconds. As long as you’ve followed all the steps prior, the code will open on VSCode.
 
 
 If you encounter any error messages or unexpected statements, let me know, and send a screenshot of the problem. (Or try to figure it out yourself!)
+
+#
+## How to commit (push) changes in terminal
+
+1. After you save your code changes in VSCode, open your terminal (to any folder).
+
+2. Type `git config --global user.name "Your Name"` and press ENTER.
+
+3. Type `git config --global user.email youremail@example.com` and press ENTER.
+
+4. `cd` into your repo folder.
+
+    ```
+    PS C:\Users\ruoha\Documents\VSCode Projects\easyu>
+    ```
+
+5. Type `git add .` and press ENTER.
+
+    ```
+    PS C:\Users\ruoha\Documents\VSCode Projects\easyu> git add .
+    ```
+
+6. Type `git commit -m "your change description"` with your own description of what you changed in the code. Press ENTER.
+
+7. Type `git push` and press ENTER.
+
+8. Now, go to the repo's page on GitHub and see if your changes got pushed!
+
+There is another way to commit/push changes directly on VSCode.
+
+1. In the vertical navigation bar on the left, go to the tab called "Source Control."
+
+2. You'll see a dropdown called "Changes," and under that will be all the folders where you've changed code. Hover over each changed folder, and there'll be a plus sign (+). Click it to stage your changes.
+
+3. Type your change description into the message bar and click "✔ Commit."
+
+4. Click "Sync Changes" to push your changes.
