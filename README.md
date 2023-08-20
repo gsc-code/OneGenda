@@ -1,1 +1,1 @@
-what are your thoughts on the chinese communist party guys
+we should make branches for individual parts of the project so we can try to prevent code override
