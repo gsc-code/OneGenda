@@ -50,7 +50,7 @@ Coming soon!
 
     You’ll see the terminal say, “Cloning into ‘repo-name’...” and some statements with “done” at the end. This means a successful clone.
 
-13. Make sure you’re in the folder “VSCode Projects” (see Step 9 above).
+13. Make sure you’re in the folder “VSCode Projects” (see Step 10 above).
 
     Type `cd` and a space.
 
