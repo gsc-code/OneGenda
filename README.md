@@ -6,7 +6,7 @@ Coming soon!
 ## How to clone a GitHub repository
 
 1. Create a GitHub account at https://github.com/. I will add you to our organization, where you can access the projects, repositories, etc.
-2. Under the green dropdown “Code,” select HTTPS and copy the link provided.
+2. Under the green dropdown “Code” in a repository, select HTTPS and copy the link provided.
 3. Install VSCode. https://code.visualstudio.com/download
 4. Install the most recent version of Git. https://git-scm.com/downloads During installation, you will be asked to choose a credential helper. Select “Git Credential Manager Core.”
 5. Open your desktop files. Create a new folder somewhere you can find easily. Name the folder “VSCode Projects” or similar. Recommended place - \Users\your-user\Documents\VSCode Projects\
