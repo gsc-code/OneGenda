@@ -52,10 +52,9 @@ Coming soon!
 
 13. Make sure you’re in the folder “VSCode Projects” (see Step 10 above).
 
-    Type `cd` and a space.
-
-    Then, type the name of the cloned repo. Press ENTER.
-    Now that you’re in the repo’s folder, type `code .`
+    Type `cd` and a space. Then, type the name of the cloned repo. Press ENTER.
+    
+14. Now that you’re in the repo’s folder, type `code .`
 
     Something like this (the example repo is named “easyu”):
 
@@ -63,7 +62,7 @@ Coming soon!
     PS C:\Users\ruoha\Documents\VSCode Projects\easyu> code .
     ```
 
-14. Press ENTER, and wait a few seconds. As long as you’ve followed all the steps prior, the code will open on VSCode.
+15. Press ENTER, and wait a few seconds. As long as you’ve followed all the steps prior, the code will open on VSCode.
 
 If you encounter any error messages or unexpected statements, let me know, and send a screenshot of the problem. (Or try to figure it out yourself!)
 
