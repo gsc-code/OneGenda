@@ -67,27 +67,29 @@ If you encounter any error messages or unexpected statements, let me know, and s
 
 1. After you save your code changes in VSCode, open your terminal (to any folder).
 
-2. Type `git config --global user.name "Your Name"` and press ENTER.
+(Steps 2 and 3 only have to be done *once* to set your initial config, not every time you commit a change.)
 
-3. Type `git config --global user.email youremail@example.com` and press ENTER.
+3. Type `git config --global user.name "Your Name"` and press ENTER.
 
-4. `cd` into your repo folder.
+4. Type `git config --global user.email youremail@example.com` and press ENTER.
+
+5. `cd` into your repo folder.
 
     ```
     PS C:\Users\ruoha\Documents\VSCode Projects\easyu>
     ```
 
-5. Type `git add .` and press ENTER.
+6. Type `git add .` and press ENTER.
 
     ```
     PS C:\Users\ruoha\Documents\VSCode Projects\easyu> git add .
     ```
 
-6. Type `git commit -m "your change description"` with your own description of what you changed in the code. Press ENTER.
+7. Type `git commit -m "your change description"` with your own description of what you changed in the code. Press ENTER.
 
-7. Type `git push` and press ENTER.
+8. Type `git push` and press ENTER.
 
-8. Now, go to the repo's page on GitHub and see if your changes got pushed!
+9. Now, go to the repo's page on GitHub and see if your changes got pushed!
 
 There is another way to commit/push changes directly on VSCode.
 
