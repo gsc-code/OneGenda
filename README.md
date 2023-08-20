@@ -1,3 +1,7 @@
+# Anti-Procrastination Schedule
+
+## Description
+Coming soon!
 
 ## How to clone a GitHub repository
 
@@ -55,10 +59,8 @@
 
 13. Press ENTER, and wait a few seconds. As long as you’ve followed all the steps prior, the code will open on VSCode.
 
-
 If you encounter any error messages or unexpected statements, let me know, and send a screenshot of the problem. (Or try to figure it out yourself!)
 
-#
 ## How to commit (push) changes in terminal
 
 1. After you save your code changes in VSCode, open your terminal (to any folder).
