@@ -22,23 +22,37 @@
                 <ul id="navbar">
                     <li><a class="active" href="index.html">Home</a></li>
                     <li>
-                        <script src="https://accounts.google.com/gsi/client" async defer></script>
+                        <div>
+                            <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-                        <div id="g_id_onload"
-                            data-client_id="314363292248-fku68u656aqiub78g593leqjbd6tuu5o.apps.googleusercontent.com"
-                            data-login_uri="https://unique-pixel-396900.uw.r.appspot.com/dashboard.html"
-                            data-scope="https://www.googleapis.com/auth/calendar"
-                            data-auto_prompt="false">
-                        </div>
-                
-                        <div class="g_id_signin"
-                            data-type="standard"
-                            data-size="large"
-                            data-width="100"
-                            data-theme="outline"
-                            data-text="sign_in_with"
-                            data-shape="rectangular"
-                            data-logo_alignment="left">
+                            <div id="g_id_onload"
+                                data-client_id="314363292248-0hkj8at161r1o3og4fgqjs604s35e9m5.apps.googleusercontent.com"
+                                data-login_uri="http://localhost:8080"
+                                data-scope="https://www.googleapis.com/auth/calendar"
+                                data-callback="handleCredentialResponse">
+                            </div>
+
+                            <script>
+                                function handleCredentialResponse(response) {
+                                    const responsePayload = decodeJwtResponse(response.credential);
+                                    console.log("ID: " + responsePayload.sub);
+                                    console.log('Full Name: ' + responsePayload.name);
+                                    console.log('Given Name: ' + responsePayload.given_name);
+                                    console.log('Family Name: ' + responsePayload.family_name);
+                                    console.log("Image URL: " + responsePayload.picture);
+                                    console.log("Email: " + responsePayload.email);
+                                }
+                            </script>
+                    
+                            <div class="g_id_signin"
+                                data-type="standard"
+                                data-size="large"
+                                data-width="100"
+                                data-theme="outline"
+                                data-text="sign_in_with"
+                                data-shape="rectangular"
+                                data-logo_alignment="left">
+                            </div>
                         </div>
                     </li>
                 </ul>
