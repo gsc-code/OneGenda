@@ -65,19 +65,53 @@
     </head>
 
     <body>
+
         <section id="header">
             <a href="#"></a>no</a>
-            <div>
+            <nav>
                 <ul id="navbar">
                     <li><a href="index.html">Home</a></li>
-                    <li><a class="active" href="login.html">Login</a></li>
+                    <li>
+
+                        <!-- Google Sign-in button in navbar for easier access (no need for login page) -->
+
+                        <div>
+                            <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+                            <div id="g_id_onload"
+                                data-client_id="314363292248-0hkj8at161r1o3og4fgqjs604s35e9m5.apps.googleusercontent.com"
+                                data-login_uri="http://localhost:8080/dashboard.html"
+                                data-scope="https://www.googleapis.com/auth/calendar"
+                                data-callback="handleCredentialResponse">
+                            </div>
+
+                            <script>
+                                function handleCredentialResponse(response) {
+                                    const responsePayload = decodeJwtResponse(response.credential);
+                                    console.log("ID: " + responsePayload.sub);
+                                    console.log('Full Name: ' + responsePayload.name);
+                                    console.log('Given Name: ' + responsePayload.given_name);
+                                    console.log('Family Name: ' + responsePayload.family_name);
+                                    console.log("Image URL: " + responsePayload.picture);
+                                    console.log("Email: " + responsePayload.email);
+                                }
+                            </script>
+                    
+                            <div class="g_id_signin"
+                                data-type="standard"
+                                data-size="large"
+                                data-width="100"
+                                data-theme="outline"
+                                data-text="sign_in_with"
+                                data-shape="rectangular"
+                                data-logo_alignment="left">
+                            </div>
+                        </div>
+
+                    </li>
                 </ul>
-            </div>
+            </nav>
         </section>
 
-        <div class="form-box">
-
-        </div>
-        <script></script>
     </body>
 </html>
