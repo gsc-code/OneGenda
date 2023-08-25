@@ -5,7 +5,7 @@ Coming soon!
 
 ## How to clone a GitHub repository
 
-*Note: I use Windows Terminal, which is different from other terminals like Linux. Some examples of terminal lines below may not apply.*
+*Note: I use Powershell, which is different from other terminals like Linux. Some examples of terminal lines below may not apply.*
 
 1. Create a GitHub account at https://github.com/. I will add you to our organization, where you can access the projects, repositories, etc.
 2. Under the green dropdown “Code” in a repository, select HTTPS and copy the link provided.
@@ -40,18 +40,21 @@ Coming soon!
 
 10. Press ENTER. You’re now in the folder “VSCode Projects.”
 
-11. Now, type `git clone` and a space.
+    ```
+    PS C:\Users\ruoha\Documents\VSCode Projects>
+    ```
+
+12. Now, type `git clone` and a space.
 
     Paste the HTTPS link from the repo, and press ENTER.
 
     You’ll see the terminal say, “Cloning into ‘repo-name’...” and some statements with “done” at the end. This means a successful clone.
 
-12. Make sure you’re in the folder “VSCode Projects” (see “v” in step “e” above).
+13. Make sure you’re in the folder “VSCode Projects” (see Step 10 above).
 
-    Type `cd` and a space.
-
-    Then, type the name of the cloned repo. Press ENTER.
-    Now that you’re in the repo’s folder, type `code .`
+    Type `cd` and a space. Then, type the name of the cloned repo. Press ENTER.
+    
+14. Now that you’re in the repo’s folder, type `code .`
 
     Something like this (the example repo is named “easyu”):
 
@@ -59,13 +62,15 @@ Coming soon!
     PS C:\Users\ruoha\Documents\VSCode Projects\easyu> code .
     ```
 
-13. Press ENTER, and wait a few seconds. As long as you’ve followed all the steps prior, the code will open on VSCode.
+15. Press ENTER, and wait a few seconds. As long as you’ve followed all the steps prior, the code will open on VSCode.
 
 If you encounter any error messages or unexpected statements, let me know, and send a screenshot of the problem. (Or try to figure it out yourself!)
 
 ## How to commit (push) changes in terminal
 
 1. After you save your code changes in VSCode, open your terminal (to any folder).
+
+(Steps 2 and 3 only have to be done *once* to set your initial config, not every time you commit a change.)
 
 2. Type `git config --global user.name "Your Name"` and press ENTER.
 
