@@ -7,21 +7,21 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // POST handler to read data
-app.post('/submit', (req, res) => {
-    console.log({
-      name: req.body.name,
-      message: req.body.message
-    });
-    res.send('Thanks for your message!');
-});
+// app.post('/login', (req, res) => {
+//     console.log({
+//       name: req.body.name,
+//       message: req.body.message
+//     });
+//     res.send('Thanks for your message!');
+// });
 
 app.get('/', (req, res) => {
-  res.send('Hello from App Engine!');
+  res.sendFile(path.join(__dirname, '/easyu/index.html'));
 });
 
-// Show form when user browses to /submit
-app.get('/submit', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/form.html'));
+// Show form when user browses to /login
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '/easyu/login.html'));
 });
 
 // Listen to the App Engine-specified port, or 8080 otherwise

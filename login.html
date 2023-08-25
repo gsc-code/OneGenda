@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                background-image: url('https://source.unsplash.com/2560x1440/?landscape');
+                background-size: cover;
+                font-family: sans-serif;
+                width: 100%;
+            }
+
+            #header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px 80px;
+                background: #dfe5fc;
+                box-shadow: 0 5px 15px rgba(34, 39, 53, 0.06);
+            }
+
+            #navbar {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #navbar li{
+                list-style: none;
+                padding: 0 20px;
+                position: relative;
+            }
+
+            #navbar li a{
+                text-decoration: none;
+                font-size: 16px;
+                font-weight: 600;
+                color: #1a1a1a;
+                transition: 0.3s ease;
+            }
+
+            #navbar li a:hover,
+            #navbar li a.active {
+                color: #088178;
+            }
+
+            #navbar li a.active::after,
+            #navbar li a:hover::after {
+                content: "";
+                width: 30%;
+                height: 2px;
+                background: #088178;
+                position: absolute;
+                bottom: -4px;
+                left: 20px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <section id="header">
+            <a href="#"></a>no</a>
+            <div>
+                <ul id="navbar">
+                    <li><a href="https://unique-pixel-396900.uw.r.appspot.com/">Home</a></li>
+                    <li><a class="active" href="https://unique-pixel-396900.uw.r.appspot.com/login">Login</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="form-box">
+
+        </div>
+        <script></script>
+    </body>
+</html>
