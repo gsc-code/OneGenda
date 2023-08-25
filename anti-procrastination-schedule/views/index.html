@@ -33,6 +33,10 @@
                             </div>
 
                             <script>
+                                const jose = require('jose');
+                                function decodeJwtResponse(jwt) {
+                                    return jose.decodeJwt(jwt);
+                                }
                                 function handleCredentialResponse(response) {
                                     const responsePayload = decodeJwtResponse(response.credential);
                                     console.log("ID: " + responsePayload.sub);
