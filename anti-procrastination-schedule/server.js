@@ -16,12 +16,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/easyu/index.html'));
+  res.sendFile(path.join(__dirname, '/views/index.html'));
 });
 
 // Show form when user browses to /login
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '/easyu/login.html'));
+    res.sendFile(path.join(__dirname, '/views/login.html'));
 });
 
 // Listen to the App Engine-specified port, or 8080 otherwise
