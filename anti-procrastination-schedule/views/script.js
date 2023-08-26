@@ -1,6 +1,7 @@
 var responsePayload = {};
 const googleSignin = document.getElementById("google-signin");
 const dashboardButton = document.getElementById("dashboard");
+const profileIcon = document.getElementById("profile-icon");
 
 // Function to decode Google token
 function parseJwt (token) {
@@ -25,6 +26,7 @@ function handleCredentialResponse(response) {
 
     googleSignin.hidden = true;
     dashboardButton.hidden = false;
+    profileIcon.setAttribute("src", responsePayload.picture);
 }
 
 // Set expiration time for itmes in the browser's local storage
@@ -55,7 +57,6 @@ function getWithExpiry(key) {
 
 	return item.value;
 }
-
 
 const userID = responsePayload.sub;
 const userFullName = responsePayload.name;

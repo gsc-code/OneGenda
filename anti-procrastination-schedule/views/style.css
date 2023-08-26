@@ -98,3 +98,13 @@ p {
 .section-m1 {
     margin: 40px 0;
 }
+
+#profile-icon {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    background-color: #fa7bb4;
+    border-radius: 50%;
+    left: 19px;
+    top: 8px;
+  }
