@@ -44,7 +44,6 @@
                                 }
 
                                 function handleCredentialResponse(response) {
-                                    console.log(response);
                                     const responsePayload = parseJwt(response.credential);
                                     console.log("ID: " + responsePayload.sub);
                                     console.log('Full Name: ' + responsePayload.name);
