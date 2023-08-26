@@ -1,5 +1,6 @@
 var responsePayload = {};
 const googleSignin = document.getElementById("google-signin");
+const dashboardButton = document.getElementById("dashboard");
 
 // Function to decode Google token
 function parseJwt (token) {
@@ -23,6 +24,7 @@ function handleCredentialResponse(response) {
     console.log("Email: " + responsePayload.email);
 
     googleSignin.hidden = true;
+    dashboardButton.hidden = false;
 }
 
 // Set expiration time for itmes in the browser's local storage
@@ -47,6 +49,7 @@ function getWithExpiry(key) {
 	if (now.getTime() > item.expiry) {
 		localStorage.removeItem(key);
         googleSignin.hidden = false;
+        dashboardButton.hidden = true;
 		return null;
 	}
 
@@ -67,6 +70,3 @@ setWithExpiry("userGivenName", userGivenName, 3600000);
 setWithExpiry("userFamilyName", userFamilyName, 3600000);
 setWithExpiry("userImageURL", userImageURL, 3600000);
 setWithExpiry("userEmail", userEmail, 3600000);
-
-
-
