@@ -27,6 +27,7 @@ function handleCredentialResponse(response) {
     googleSignin.hidden = true;
     dashboardButton.hidden = false;
     profileIcon.setAttribute("src", responsePayload.picture);
+    profileIcon.hidden = false;
 }
 
 // Set expiration time for itmes in the browser's local storage
@@ -52,6 +53,7 @@ function getWithExpiry(key) {
 		localStorage.removeItem(key);
         googleSignin.hidden = false;
         dashboardButton.hidden = true;
+        profileIcon.hidden = false;
 		return null;
 	}
 
