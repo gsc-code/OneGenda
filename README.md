@@ -1,11 +1,11 @@
 # Anti-Procrastination Schedule
 
 ## Description
-Coming soon!
+See our website, https://unique-pixel-396900.uw.r.appspot.com, for a description of our project and team! (No, this is not a scam. We just haven't applied for a unique domain yet.)
 
 ## How to clone a GitHub repository
 
-*Note: I use Powershell, which is different from other terminals like Linux. Some examples of terminal lines below may not apply.*
+*Note: I use Windows Powershell, which is different from other terminals like Linux. Some examples of terminal lines below may not apply.*
 
 1. Create a GitHub account at https://github.com/. I will add you to our organization, where you can access the projects, repositories, etc.
 2. Under the green dropdown “Code” in a repository, select HTTPS and copy the link provided.
