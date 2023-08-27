@@ -2,13 +2,6 @@ var responsePayload = {};
 const googleSignin = document.getElementById("google-signin");
 const dashboardButton = document.getElementById("dashboard");
 
-setWithExpiry("userID", responsePayload.sub, 3600000);
-setWithExpiry("userFullName", responsePayload.name, 3600000);
-setWithExpiry("userGivenName", responsePayload.given_name, 3600000);
-setWithExpiry("userFamilyName", responsePayload.family_name, 3600000);
-setWithExpiry("userImageURL", responsePayload.picture, 3600000);
-setWithExpiry("userEmail", responsePayload.email, 3600000);
-
 // Function to decode Google token
 function parseJwt (token) {
     var base64Url = token.split('.')[1];
@@ -33,8 +26,6 @@ function handleCredentialResponse(response) {
 
     googleSignin.hidden = true;
     dashboardButton.hidden = false;
-    // profileIcon1.setAttribute("src", responsePayload.picture);
-    // profileIcon1.hidden = false;
 }
 
 
@@ -100,3 +91,16 @@ function getWithExpiry(key) {
 // data-login_uri="https://unique-pixel-396900.uw.r.appspot.com/dashboard.html"
 // data-scope="https://www.googleapis.com/auth/calendar"
 
+var userID = "";
+var userFullName = "";
+var userGivenName = "";
+var userFamilyName = "";
+var userImageURL = "";
+var userEmail = "";
+
+setWithExpiry("userID", responsePayload.sub, 3600000);
+setWithExpiry("userFullName", responsePayload.name, 3600000);
+setWithExpiry("userGivenName", responsePayload.given_name, 3600000);
+setWithExpiry("userFamilyName", responsePayload.family_name, 3600000);
+setWithExpiry("userImageURL", responsePayload.picture, 3600000);
+setWithExpiry("userEmail", responsePayload.email, 3600000);
