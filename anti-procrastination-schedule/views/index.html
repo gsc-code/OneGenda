@@ -15,9 +15,9 @@
 
     </head>
 
-    <body>
+    <body onload="updateSignedIn()">
         <section id="header">
-            <a href="#"></a>Anti-Procrastination Schedule</a>
+            <a>Anti-Procrastination Schedule</a>
             <nav>
                 <ul id="navbar">
                     <li><a class="active" href="index.html">Home</a></li>
@@ -27,8 +27,7 @@
 
                             <div id="g_id_onload"
                                 data-client_id="314363292248-0hkj8at161r1o3og4fgqjs604s35e9m5.apps.googleusercontent.com"
-                                data-login_uri="https://unique-pixel-396900.uw.r.appspot.com/dashboard.html"
-                                data-scope="https://www.googleapis.com/auth/calendar"
+                                scope="https://www.googleapis.com/auth/calendar"
                                 data-callback="handleCredentialResponse">
                             </div>
                     
@@ -48,7 +47,7 @@
                         <a href="dashboard.html">Dashboard</a>
                     </li>
 
-                    <li><img id="profile-icon" hidden="true"></li>
+                    <li><img class="profile-icon" id="profile-icon1" hidden="true" href="dashboard.html"></li>
 
                 </ul>
             </nav>

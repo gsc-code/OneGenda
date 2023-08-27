@@ -105,6 +105,11 @@ p {
     margin: 15px 0 20px 0;
 }
 
+a {
+    font-size: 20px;
+    color: #1a1a1a;
+}
+
 .section-p1 {
     padding: 40px 80px;
 }
@@ -113,11 +118,11 @@ p {
     margin: 40px 0;
 }
 
-#profile-icon {
+.profile-icon {
     height: 35px;
     width: 35px;
     position: absolute;
     border-radius: 50%;
     margin-top: -18px;
     margin-left: -25px;
-  }
+}
