@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Test Page</title>
+</head>
+
+<body>
+  <script src="https://accounts.google.com/gsi/client"></script>
+  <script src="https://apis.google.com/js/client.js"></script>
+
+  <button id="authorize-button" onclick="checkAuth()">Sign In</button>
+
+  <div>
+    <img id='my-avatar' />
+    <div id='my-name'></div>
+  </div>
+  <div id='content'>
+    <h1>Events</h1>
+    <ul id='events'></ul>
+  </div>
+
+  <script>
+    const clientId = '314363292248-0hkj8at161r1o3og4fgqjs604s35e9m5.apps.googleusercontent.com';
+    const scopes = 'https://www.googleapis.com/auth/calendar';
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: scopes,
+      prompt: '',
+      login_hint: localStorage.getItem('myEmail'),
+      callback: (response) => {
+        handleAuthResult(response);
+      }
+    });
+
+    function handleAuthResult(authResult) {
+      var authorizeButton = document.getElementById('authorize-button');
+      if (authResult) {
+        console.log(authResult);
+        authorizeButton.style.visibility = 'hidden';
+        gapi.client.setToken(authResult);
+        makeApiCall();
+      } else {
+        authorizeButton.style.visibility = '';
+        authorizeButton.onclick = checkAuth;
+      }
+    }
+
+    function checkAuth(event) {
+      client.requestAccessToken();
+    }
+
+    async function makeApiCall() {
+      await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/people/v1/rest');
+      await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest');
+
+      const myProfile = await gapi.client.people.people.get({ resourceName: 'people/me', personFields: 'names,photos,emailAddresses' });
+      console.log(myProfile);
+      document.getElementById('my-avatar').src = myProfile.result.photos[0].url;
+      document.getElementById('my-name').innerText = myProfile.result.names[0].displayName;
+      localStorage.setItem('myEmail', myProfile.result.emailAddresses[0].value);
+
+      const request = {
+        'calendarId': 'primary',
+        'timeMin': (new Date()).toISOString(),
+        'singleEvents': true,
+        'orderBy': 'startTime',
+        'maxResults': 10,
+      };
+
+      const response = await gapi.client.calendar.events.list(request);
+      console.log(response);
+      const events = response.result.items;
+
+      for (var i = 0; i < events.length; i++) {
+        var li = document.createElement('li');
+        li.appendChild(document.createTextNode(`${events[i].start.date} ${events[i].summary}`));
+        document.getElementById('events').appendChild(li);
+      }
+
+      // const freeBusy = await gapi.client.calendar.freebusy.query({ 'timeMin': (new Date()).toISOString(), 'timeMax': (new Date().addDays(1)).toISOString(), 'items': [{ 'id': 'primary' }] })
+    }
+
+  </script>
+</body>
+
+</html>
