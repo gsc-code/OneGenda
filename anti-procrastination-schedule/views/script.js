@@ -78,7 +78,7 @@ function updateSignedIn() {
 }
 
 
-// Set expiration time for itmes in the browser's local storage
+// Set expiration time for items in the browser's local storage
 function setWithExpiry(key, value, ttl) {
 	const now = new Date();
 	const item = {
