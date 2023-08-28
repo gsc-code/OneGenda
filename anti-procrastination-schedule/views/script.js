@@ -33,12 +33,12 @@ function handleCredentialResponse(response) {
     userImageURL = responsePayload.picture;
     userEmail = responsePayload.email;
     
-    setWithExpiry("userID", userID, 3600000); // 1 hr = 3600000
-    setWithExpiry("userFullName", userFullName, 3600000);
-    setWithExpiry("userGivenName", userGivenName, 3600000);
-    setWithExpiry("userFamilyName", userFamilyName, 3600000);
-    setWithExpiry("userImageURL", userImageURL, 10000); // test - 10 sec
-    setWithExpiry("userEmail", userEmail, 3600000);
+    setWithExpiry("userID", userID, 30000); // 1 hr = 3600000
+    setWithExpiry("userFullName", userFullName, 30000); // test - 30 sec = 30000
+    setWithExpiry("userGivenName", userGivenName, 30000);
+    setWithExpiry("userFamilyName", userFamilyName, 30000);
+    setWithExpiry("userImageURL", userImageURL, 30000);
+    setWithExpiry("userEmail", userEmail, 30000);
 
     console.log("ID: " + userID);
     console.log("Full Name: " + userFullName);
@@ -49,18 +49,20 @@ function handleCredentialResponse(response) {
 
     googleSignin.hidden = true;
     dashboardButton.hidden = false;
+    window.location.replace("https://unique-pixel-396900.uw.r.appspot.com/dashboard.html");
 }
 
 
 function updateSignedIn() {
     if (window.location.href == "https://unique-pixel-396900.uw.r.appspot.com/index.html" || window.location.href == "https://unique-pixel-396900.uw.r.appspot.com") {
         var profileIcon1 = document.getElementById("profile-icon1");    
-        if (localStorage.getItem("userImageURL")) {
+        if (getWithExpiry("userImageURL")) {
             googleSignin.hidden = true;
             dashboardButton.hidden = false;
-            profileIcon1.setAttribute("src", JSON.parse(localStorage.getItem("userImageURL")).value);
+            profileIcon1.setAttribute("src", getWithExpiry("userImageURL"));
             profileIcon1.hidden = false;
         } else {
+            console.log("not signed in");
             googleSignin.hidden = false;
             dashboardButton.hidden = true;
             profileIcon1.hidden = true;
@@ -68,10 +70,11 @@ function updateSignedIn() {
         
     } else if (window.location.href == "https://unique-pixel-396900.uw.r.appspot.com/dashboard.html") {
         var profileIcon2 = document.getElementById("profile-icon2");
-        if (localStorage.getItem("userImageURL")) {
-            profileIcon2.setAttribute("src", JSON.parse(localStorage.getItem("userImageURL")).value);
+        if (getWithExpiry("userImageURL")) {
+            profileIcon2.setAttribute("src", getWithExpiry("userImageURL"));
             profileIcon2.hidden = false;
         } else {
+            console.log("not signed in - returning to home page");
             window.location.replace("https://unique-pixel-396900.uw.r.appspot.com");
         }
     }
@@ -98,10 +101,10 @@ function getWithExpiry(key) {
 	const item = JSON.parse(itemStr);
 	const now = new Date();
 	if (now.getTime() > item.expiry) {
-		localStorage.removeItem(key);
-        googleSignin.hidden = false;
-        dashboardButton.hidden = true;
-        profileIcon.hidden = true;
+        localStorage.clear();
+		// localStorage.removeItem(key);
+        // googleSignin.hidden = false;
+        // dashboardButton.hidden = true;
 		return null;
 	}
 
