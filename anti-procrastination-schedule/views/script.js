@@ -104,3 +104,59 @@ setWithExpiry("userGivenName", responsePayload.given_name, 3600000);
 setWithExpiry("userFamilyName", responsePayload.family_name, 3600000);
 setWithExpiry("userImageURL", responsePayload.picture, 3600000);
 setWithExpiry("userEmail", responsePayload.email, 3600000);
+
+
+// Pre-algorithmic backend work (gary)
+// NOTE: pls replace the proper user-id info for variables and data cus idk how to do it
+
+const dayHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+var availableHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+var occupiedHours = [];
+var tasks = []; //format is [task-name, start-hour, end-hour, etc.]
+
+// Function for creating new task
+// checks if task hours overlaps with any previous tasks
+// returns [task-name, start-hour, end-hour] if hours don't overlap
+function newTask(taskName, startHour, endHour) {
+    var taskHours = [];
+    // creates array of occupying hours of new task
+    for (let i = startHour; i < endHour+1; i++) {
+        taskHours.push(i);
+    }
+    // checks for any overlapping hours
+    for (let i = 0; i < taskHours.length/3; i++) {
+        let item = taskHours[i];
+        for (let j = 0; j < occupiedHours.length; j++) {
+            if (item == occupiedHours[j]) {
+                // returns "unavailable" if hours overlap
+                return "unavailable";
+            }
+        }
+        
+    }
+    // updates list of occupied hours
+    occupiedHours = occupiedHours.concat(taskHours);
+    sortHours(occupiedHours);
+    // updates list of available hours
+    for (let i = 0; i < taskHours.length; i++) {
+        let item = taskHours[i];
+        for (let j = 0; j < availableHours.length; j++) {
+            if (item == availableHours[j]) {
+                availableHours.splice(j, 1);
+            }
+            
+        }
+        
+    }
+    return [taskName, startHour, endHour];
+}
+
+function sortHours(array) {
+    array.sort((a, b) => a - b);
+    console.log(array);
+}
+
+function newSchedule() {
+
+}
+
