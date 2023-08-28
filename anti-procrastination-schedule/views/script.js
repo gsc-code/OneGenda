@@ -172,3 +172,10 @@ function newSchedule() {
 }
 
 
+
+setWithExpiry("userID", responsePayload.sub, 3600000);
+setWithExpiry("userFullName", responsePayload.name, 3600000);
+setWithExpiry("userGivenName", responsePayload.given_name, 3600000);
+setWithExpiry("userFamilyName", responsePayload.family_name, 3600000);
+setWithExpiry("userImageURL", responsePayload.picture, 3600000);
+setWithExpiry("userEmail", responsePayload.email, 3600000);
