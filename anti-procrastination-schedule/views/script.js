@@ -12,7 +12,7 @@ const googleSignin = document.getElementById("google-signin");
 const dashboardButton = document.getElementById("dashboard");
 
 // Function to decode Google token
-function parseJwt (token) {
+function parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
@@ -41,9 +41,9 @@ function handleCredentialResponse(response) {
     setWithExpiry("userEmail", userEmail, 3600000);
 
     console.log("ID: " + userID);
-    console.log('Full Name: ' + userFullName);
-    console.log('Given Name: ' + userGivenName);
-    console.log('Family Name: ' + userFamilyName);
+    console.log("Full Name: " + userFullName);
+    console.log("Given Name: " + userGivenName);
+    console.log("Family Name: " + userFamilyName);
     console.log("Image URL: " + userImageURL);
     console.log("Email: " + userEmail);
 
@@ -55,10 +55,10 @@ function handleCredentialResponse(response) {
 function updateSignedIn() {
     if (window.location.href == "https://unique-pixel-396900.uw.r.appspot.com/index.html" || window.location.href == "https://unique-pixel-396900.uw.r.appspot.com") {
         var profileIcon1 = document.getElementById("profile-icon1");    
-        if (localStorage.userImageURL) {
+        if (localStorage.getItem("userImageURL")) {
             googleSignin.hidden = true;
             dashboardButton.hidden = false;
-            profileIcon1.setAttribute("src", userImageURL);
+            profileIcon1.setAttribute("src", JSON.parse(localStorage.getItem("userImageURL")).value);
             profileIcon1.hidden = false;
         } else {
             googleSignin.hidden = false;
@@ -68,8 +68,8 @@ function updateSignedIn() {
         
     } else if (window.location.href == "https://unique-pixel-396900.uw.r.appspot.com/dashboard.html") {
         var profileIcon2 = document.getElementById("profile-icon2");
-        if (localStorage.userImageURL) {
-            profileIcon2.setAttribute("src", userImageURL);
+        if (localStorage.getItem("userImageURL")) {
+            profileIcon2.setAttribute("src", JSON.parse(localStorage.getItem("userImageURL")).value);
             profileIcon2.hidden = false;
         } else {
             window.location.replace("https://unique-pixel-396900.uw.r.appspot.com");
