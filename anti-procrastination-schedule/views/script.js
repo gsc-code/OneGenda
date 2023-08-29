@@ -1,5 +1,5 @@
-// Lines 1-185: ruohan's workspace
-// Lines 190-245: gary's workspace
+// Lines 1-210: ruohan's workspace
+// Lines 215-270: gary's workspace
 
 // var responsePayload = {};
 var userFullName;
@@ -207,11 +207,6 @@ function getWithExpiry(key) {
 	return item.value;
 }
 
-
-
-
-// data-login_uri="https://unique-pixel-396900.uw.r.appspot.com/dashboard.html"
-// data-scope="https://www.googleapis.com/auth/calendar"
 
 
 

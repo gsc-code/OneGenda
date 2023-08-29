@@ -15,17 +15,13 @@ body {
     height: 80px;
 }
 
-.description {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 8%;
-    margin: 50px 25%;
-    background: whitesmoke;
-}
-
-.separator {
-    padding: 150px;
+#profile-icon {
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    border-radius: 50%;
+    margin-top: -18px;
+    margin-left: -25px;
 }
 
 #navbar {
@@ -118,11 +114,15 @@ a {
     margin: 40px 0;
 }
 
-#profile-icon {
-    height: 35px;
-    width: 35px;
-    position: absolute;
-    border-radius: 50%;
-    margin-top: -18px;
-    margin-left: -25px;
+.description {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 8%;
+    margin: 50px 25%;
+    background: whitesmoke;
+}
+
+.separator {
+    padding: 150px;
 }
