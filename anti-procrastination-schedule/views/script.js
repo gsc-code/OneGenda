@@ -1,7 +1,6 @@
-// Lines 1-210: ruohan's workspace
-// Lines 215-270: gary's workspace
+// Lines 1-160: ruohan's workspace
+// Lines 165-220+: gary's workspace
 
-// var responsePayload = {};
 var userFullName;
 var userImageURL;
 var userEmail;
@@ -9,7 +8,9 @@ var userEmail;
 // HTML Elements
 const googleSignin = document.getElementById("google-signin");
 const dashboardButton = document.getElementById("dashboard");
-const profileIcon = document.getElementById("profile-icon");  
+const profileIcon = document.getElementById("profile-icon"); 
+const notSignedIn = document.getElementById("not-signed-in");
+const dashboardContent = document.getElementById("dashboard-content");
 
 const clientId = '314363292248-0hkj8at161r1o3og4fgqjs604s35e9m5.apps.googleusercontent.com';
 const scopes = 'https://www.googleapis.com/auth/calendar';
@@ -74,18 +75,6 @@ async function makeApiCall() {
     // const freeBusy = await gapi.client.calendar.freebusy.query({ 'timeMin': (new Date()).toISOString(), 'timeMax': (new Date().addDays(1)).toISOString(), 'items': [{ 'id': 'primary' }] })
 }
 
-// Function to decode Google token
-// function parseJwt(token) {
-//     var base64Url = token.split('.')[1];
-//     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-//     var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-//         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-//     }).join(''));
-
-//     return JSON.parse(jsonPayload);
-// }
-
-
 // Handle response from Google
 async function handleCredentialResponse(response) {
     if (response) {
@@ -96,29 +85,20 @@ async function handleCredentialResponse(response) {
         googleSignin.hidden = true;
         dashboardButton.hidden = false;
         console.log("signed in");
-        window.location.replace("https://unique-pixel-396900.uw.r.appspot.com/dashboard.html");
-        profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
-        profileIcon.hidden = false;
+        if (window.location.href != "https://unique-pixel-396900.uw.r.appspot.com/dashboard.html") {
+            window.location.replace("https://unique-pixel-396900.uw.r.appspot.com/dashboard.html");
+        } else {
+            window.location.reload();
+            profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
+            profileIcon.hidden = false;
+        }
     } else {
         console.log("not signed in");
         window.location.replace("https://unique-pixel-396900.uw.r.appspot.com");
         dashboardButton.hidden = true;
         googleSignin.hidden = false;
         googleSignin.click = signIn();
-    }
-
-    // responsePayload = parseJwt(response.credential);
-    // console.log(responsePayload);
-    // userID = responsePayload.sub;
-    // userFullName = responsePayload.name;
-    // userGivenName = responsePayload.given_name;
-    // userFamilyName = responsePayload.family_name;
-    // userImageURL = responsePayload.picture;
-    // userEmail = responsePayload.email;
-
-    // googleSignin.hidden = true;
-    // dashboardButton.hidden = false;
-    
+    }    
 }
 
 function updateHome() {
@@ -135,47 +115,21 @@ function updateHome() {
 }
 
 function updateDashboard() {
-    var notSignedIn = document.getElementById("not-signed-in");
     if (getWithExpiry("RESPONSE")) {
+        googleSignin.hidden = true;
         dashboardButton.hidden = false;
-        notSignedIn.hidden = true;
         profileIcon.hidden = false;
         profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
-        googleSignin.hidden = true;
+        notSignedIn.hidden = true;
+        dashboardContent.hidden = false;
     } else {
         dashboardButton.hidden = true;
         notSignedIn.hidden = false;
+        dashboardContent.hidden = true;
         profileIcon.hidden = true;
         googleSignin.hidden = false;
     }
 }
-
-// function updateSignedIn() {
-//     if (window.location.href == "https://unique-pixel-396900.uw.r.appspot.com/index.html" || window.location.href == "https://unique-pixel-396900.uw.r.appspot.com") {
-//         var profileIcon1 = document.getElementById("profile-icon1");    
-//         if (getWithExpiry("userImageURL")) {
-//             googleSignin.hidden = true;
-//             dashboardButton.hidden = false;
-//             profileIcon1.setAttribute("src", getWithExpiry("userImageURL"));
-//             profileIcon1.hidden = false;
-//         } else {
-//             console.log("not signed in");
-//             googleSignin.hidden = false;
-//             dashboardButton.hidden = true;
-//             profileIcon1.hidden = true;
-//         }
-        
-//     } else if (window.location.href == "https://unique-pixel-396900.uw.r.appspot.com/dashboard.html") {
-//         var profileIcon2 = document.getElementById("profile-icon2");
-//         if (getWithExpiry("userImageURL")) {
-//             profileIcon2.setAttribute("src", getWithExpiry("userImageURL"));
-//             profileIcon2.hidden = false;
-//         } else {
-//             console.log("not signed in - returning to home page");
-//             window.location.replace("https://unique-pixel-396900.uw.r.appspot.com");
-//         }
-//     }
-// }
 
 // Set expiration time for items in the browser's local storage
 function setWithExpiry(key, value, ttl) {
@@ -198,16 +152,11 @@ function getWithExpiry(key) {
 	const now = new Date();
 	if (now.getTime() > item.expiry) {
         localStorage.clear();
-		// localStorage.removeItem(key);
-        // googleSignin.hidden = false;
-        // dashboardButton.hidden = true;
 		return null;
 	}
 
 	return item.value;
 }
-
-
 
 
 
