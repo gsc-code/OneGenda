@@ -15,20 +15,37 @@
 
     </head>
 
-    <body onload="updateSignedIn()">
+    <body onload="updateDashboard()">
         <section id="header">
             <a>Anti-Procrastination Schedule</a>
             <nav>
                 <ul id="navbar">
                     <li><a href="index.html">Home</a></li>
-                    <!-- will change this later -->
-                    <li><a class="active" href="dashboard.html">Dashboard</a></li>
-                    <li><img class="profile-icon" id="profile-icon2" href="dashboard.html"></li>
+                    <li>
+                        <div id="google-signin">
+                            <script src="https://accounts.google.com/gsi/client"></script>
+                            <script src="https://apis.google.com/js/client.js"></script>
+                            <button onclick="signIn()">Sign In</button>
+                        </div>
+                    </li>
+                    <li id="dashboard" class="active">
+                        <a href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li><img id="profile-icon" href="dashboard.html"></li>
                 </ul>
             </nav>
         </section>
 
+        <div id="not-signed-in" hidden="true">
+            <h4>Page Not Found</h4>
+            <p>Please sign in to access your dashboard.</p>
+        </div>
 
+        <div id="dashboard-content" hidden="false">
+
+            <!-- ALL DASHBOARD CONTENT HERE -->
+
+        </div>
 
     </body>
 </html>
