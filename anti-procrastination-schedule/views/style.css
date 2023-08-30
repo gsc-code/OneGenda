@@ -24,6 +24,18 @@ body {
     margin-left: -25px;
 }
 
+div img:last-child {
+    display: none;  
+}
+div:hover img:last-child {
+    display: block;
+    cursor: pointer;
+}
+div:hover img:first-child {
+    display: none;  
+    cursor: pointer;
+}
+
 #navbar {
     display: flex;
     align-items: center;
