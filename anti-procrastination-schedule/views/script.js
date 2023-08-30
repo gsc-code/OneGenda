@@ -45,10 +45,10 @@ async function makeApiCall() {
     console.log("Email: " + userEmail);
     
     // 1 hr = 3600000
-    // test - 30 sec = 30000
-    setWithExpiry("userFullName", userFullName, 30000);
-    setWithExpiry("userImageURL", userImageURL, 30000);
-    setWithExpiry("userEmail", userEmail, 30000);
+    // test - 1 min = 60000
+    setWithExpiry("userFullName", userFullName, 60000);
+    setWithExpiry("userImageURL", userImageURL, 60000);
+    setWithExpiry("userEmail", userEmail, 60000);
 
     const request = {
         'calendarId': 'primary',
@@ -79,22 +79,25 @@ async function makeApiCall() {
 async function handleCredentialResponse(response) {
     if (response) {
         console.log(response);
-        setWithExpiry("RESPONSE", response, 30000); // actual Google token expires in 3599 seconds (~ 1 hr) - 3599000 ms
+        setWithExpiry("RESPONSE", response, 60000); // actual Google token expires in 3599 seconds (~ 1 hr) = 3599000 ms
         gapi.client.setToken(response);
         await makeApiCall();
         googleSignin.hidden = true;
         dashboardButton.hidden = false;
         console.log("signed in");
-        if (window.location.href != "https://unique-pixel-396900.uw.r.appspot.com/dashboard.html") {
-            window.location.replace("https://unique-pixel-396900.uw.r.appspot.com/dashboard.html");
+        if (window.location.href != "/dashboard.html") {
+            window.location.replace("/dashboard.html");
         } else {
             window.location.reload();
-            profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
             profileIcon.hidden = false;
+            profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
+            notSignedIn.setAttribute("style", "visibility: hidden");
+            dashboardContent.setAttribute("style", "visibility: visible");
+            dashboardButton.className = "active";
         }
     } else {
         console.log("not signed in");
-        window.location.replace("https://unique-pixel-396900.uw.r.appspot.com");
+        window.location.replace("/");
         dashboardButton.hidden = true;
         googleSignin.hidden = false;
         googleSignin.click = signIn();
@@ -118,14 +121,15 @@ function updateDashboard() {
     if (getWithExpiry("RESPONSE")) {
         googleSignin.hidden = true;
         dashboardButton.hidden = false;
+        dashboardButton.setAttribute("class", "active");
         profileIcon.hidden = false;
         profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
-        notSignedIn.hidden = true;
-        dashboardContent.hidden = false;
+        notSignedIn.setAttribute("style", "visibility: hidden");
+        dashboardContent.setAttribute("style", "visibility: visible");
     } else {
         dashboardButton.hidden = true;
-        notSignedIn.hidden = false;
-        dashboardContent.hidden = true;
+        notSignedIn.setAttribute("style", "visibility: visible");
+        dashboardContent.setAttribute("style", "visibility: hidden");
         profileIcon.hidden = true;
         googleSignin.hidden = false;
     }

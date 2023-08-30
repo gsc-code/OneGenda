@@ -22,7 +22,7 @@
                 <ul id="navbar">
                     <li><a href="index.html">Home</a></li>
                     <li>
-                        <div id="google-signin">
+                        <div id="google-signin" hidden="true">
                             <script src="https://accounts.google.com/gsi/client"></script>
                             <script src="https://apis.google.com/js/client.js"></script>
                             <div>
@@ -31,20 +31,20 @@
                             </div>
                         </div>
                     </li>
-                    <li id="dashboard" class="active">
-                        <a href="dashboard.html">Dashboard</a>
+                    <li id="dashboard">
+                        <a class="active" href="dashboard.html">Dashboard</a>
                     </li>
                     <li><img id="profile-icon" href="dashboard.html"></li>
                 </ul>
             </nav>
         </section>
 
-        <div id="not-signed-in" hidden="true" class="description">
+        <div id="not-signed-in" style="visibility: hidden" class="description">
             <h4>Page Not Found</h4>
             <p>Please sign in to access your dashboard.</p>
         </div>
 
-        <div id="dashboard-content" hidden="false">
+        <div id="dashboard-content" style="visibility: visible">
 
             <!-- ALL DASHBOARD CONTENT HERE -->
 
