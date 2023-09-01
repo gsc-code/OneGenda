@@ -121,17 +121,24 @@ function getWithExpiry(key) {
 
 
 // Pre-algorithmic backend work (gary)
+
+// 8/31 Update: created schedule-generating algorithm (not including preset tasks yet)
+// WARNING: algorithm currently does NOT have a way to check if such available consecutive hours exists and if not will get stuck in an infinite loop. Will try to fix soon :P
+// also I didnt include than many comments on how the algo works or console logs yet cus messy so sry if its hard to understand
+
 // NOTE: pls replace the proper user-id info for variables and data cus idk how to do it
 
 const dayHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 var availableHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 var occupiedHours = [];
-var tasks = []; //format is [task-name, start-hour, end-hour, etc.]
+var scheduledTasks = []; //format is [task-name, start-hour, end-hour, etc.]
+var tasks = []; //format is [task-name, hours, etc.]
+var dailySchedule = [];
 
-// Function for creating new task
+// Function for creating new scheduled/daily task
 // checks if task hours overlaps with any previous tasks
 // returns [task-name, start-hour, end-hour] if hours don't overlap
-function newTask(taskName, startHour, endHour) {
+function newScheduledTask(taskName, startHour, endHour) {
     var taskHours = [];
     // creates array of occupying hours of new task
     for (let i = startHour; i < endHour+1; i++) {
@@ -165,13 +172,65 @@ function newTask(taskName, startHour, endHour) {
     return [taskName, startHour, endHour];
 }
 
+function newTask(taskName, hours) {
+    task.push(taskName, hours);
+}
+
 function sortHours(array) {
     array.sort((a, b) => a - b);
     console.log(array);
 }
 
 function newSchedule() {
+    dailySchedule = [];
+    var noConflict = true;
+    for (let i = 0; i < tasks.length/2; i++) {
+        // pulls name and duration of task from tasks array
+        var taskName = tasks[i*2-1];
+        var taskLength = tasks[i*2];
 
+        // re-generates assigned hours until sutible hours are found
+        while (noConflict == false) {
+            // selects random available hour to start task
+            var index = randomNumber(0, availableHours.length);
+            var startHour = availableHours[index];
+
+            // identifies ending hour of task based on inputted duration
+            var endHour = startHour + taskLength;
+
+            // checks if consecutive hours are available
+            noConflict = hasConsecutiveHours(availableHours, startHour, taskLength);
+            
+        }
+        // updates occupiedHours array with new assigned hours
+        occupiedHours = occupiedHours.concat(availableHours.slice(index, index + taskLength));
+        
+        // removes assigned task hours from availableHours array
+        availableHours = availableHours.splice(index, index + taskLength);
+        
+        // appends task's name, start, and end hour to new schedule
+        dailySchedule.push(taskName);
+        dailySchedule.push(startHour);
+        dailySchedule.push(endHour);
+    }
 }
 
+function randomNumber(max, min) {
+    return Math.floor(Math.random() * (max - min + 1)) + 1;
+}
 
+function hasConsecutiveHours(array, start, sequenceLength) {
+    for (let j = 0; j < array.length; j++) {
+      var temp = array[j];
+      if (temp == start) {
+        startIndex = j;
+        for (let k = 0; k < sequenceLength; k++) {
+            if (array[startIndex + k] != (start + k)) {
+                return false;
+            }
+        }
+        return true;
+      }
+    }
+    return false;
+}
