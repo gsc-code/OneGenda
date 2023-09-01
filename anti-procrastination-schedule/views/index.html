@@ -7,6 +7,7 @@
         <title>Home</title>
         <link rel="stylesheet" href="style.css">
         <script src="script.js" defer></script>
+        
 
         <!-- possible font (currently not used) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,24 +16,33 @@
 
     </head>
 
-    <body onload="updateSignedIn()">
+    <body onload="updateHome()">
         <section id="header">
             <a>Anti-Procrastination Schedule</a>
             <nav>
                 <ul id="navbar">
                     <li><a class="active" href="index.html">Home</a></li>
                     <li>
-                        <div id="google-signin">
-                            <script src="https://accounts.google.com/gsi/client" async defer></script>
+                        <div id="google-signin" hidden="true">
+
+                            <script src="https://accounts.google.com/gsi/client"></script>
+                            <script src="https://apis.google.com/js/client.js"></script>
+
+                            <div>
+                                <img src="normal_light_button.png" onclick="signIn()">
+                                <img src="pressed_light_button.png" onclick="signIn()">
+                            </div>
+
+                            <!-- <script src="https://accounts.google.com/gsi/client" async defer></script>
 
                             <div id="g_id_onload"
                                 data-client_id="314363292248-0hkj8at161r1o3og4fgqjs604s35e9m5.apps.googleusercontent.com"
                                 scope="https://www.googleapis.com/auth/calendar"
                                 data-callback="handleCredentialResponse"
                                 data-auto_prompt="false">
-                            </div>
+                            </div> -->
                     
-                            <div class="g_id_signin"
+                            <!-- <div class="g_id_signin"
                                 data-type="standard"
                                 data-size="large"
                                 data-width="100"
@@ -40,7 +50,7 @@
                                 data-text="sign_in_with"
                                 data-shape="rectangular"
                                 data-logo_alignment="left">
-                            </div>
+                            </div> -->
                         </div>
                     </li>
 
@@ -48,7 +58,7 @@
                         <a href="dashboard.html">Dashboard</a>
                     </li>
 
-                    <li><img class="profile-icon" id="profile-icon1" hidden="true" href="dashboard.html"></li>
+                    <li><img id="profile-icon" hidden="true" href="dashboard.html"></li>
 
                 </ul>
             </nav>
