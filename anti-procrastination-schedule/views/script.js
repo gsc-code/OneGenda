@@ -180,7 +180,15 @@ var availableHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
 var occupiedHours = [];
 var scheduledTasks = []; //format is [task-name, start-hour, end-hour, etc.]
 var tasks = []; //format is [task-name, hours, etc.]
-var dailySchedule = [];
+var dailySchedule = []; //format is [task-name, start-hour, end-hour, etc.]
+
+// Test inputs (for debugging)
+
+/*
+tasks = ["food", 1, "hw", 2, "play", 1];
+availableHours = [16,17,18,19,20,21];
+occupiedHours = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,22,23,24]
+*/
 
 // Function for creating new scheduled/daily task
 // checks if task hours overlaps with any previous tasks
@@ -225,40 +233,70 @@ function newTask(taskName, hours) {
 
 function sortHours(array) {
     array.sort((a, b) => a - b);
-    console.log(array);
+    //console.log("Sorted array: " + array);
 }
 
 function newSchedule() {
     dailySchedule = [];
-    var noConflict = true;
+    var count = 0;
     for (let i = 0; i < tasks.length/2; i++) {
+        var noConflict = false;
+
         // pulls name and duration of task from tasks array
-        var taskName = tasks[i*2-1];
-        var taskLength = tasks[i*2];
+        var taskName = tasks[i*2];
+        var taskLength = tasks[i*2+1];
+
+        // declare task variables
+        var index;
+        var startHour;
+        var endHour;
+
+        count++;
+        console.log("count: " + count);
+
+        console.log("taskName: " + taskName);
+        console.log("taskLength: " + taskLength);
 
         // re-generates assigned hours until sutible hours are found
         while (noConflict == false) {
             // selects random available hour to start task
-            var index = randomNumber(0, availableHours.length);
-            var startHour = availableHours[index];
+            index = randomNumber(0, availableHours.length - 1);
+            startHour = availableHours[index];
 
             // identifies ending hour of task based on inputted duration
-            var endHour = startHour + taskLength;
+            endHour = startHour + taskLength - 1;
+
+            console.log("index: " + index);
+            console.log("startHour: " + startHour);
+            console.log("endHour: " + endHour);
 
             // checks if consecutive hours are available
             noConflict = hasConsecutiveHours(availableHours, startHour, taskLength);
             
         }
         // updates occupiedHours array with new assigned hours
-        occupiedHours = occupiedHours.concat(availableHours.slice(index, index + taskLength));
+        if (taskLength <= 1) {
+            occupiedHours.push(startHour);
+            sortHours(occupiedHours);
+        } else {
+            occupiedHours = occupiedHours.concat(availableHours.slice(index, index + taskLength + 1));
+            sortHours(occupiedHours);
+        }
+
+        var firstHalf = availableHours.splice(0, index);
+        var secondHalf = availableHours.splice(index + taskLength - 1, availableHours.length - (index + taskLength - 1));
         
         // removes assigned task hours from availableHours array
-        availableHours = availableHours.splice(index, index + taskLength);
+        availableHours = firstHalf.concat(secondHalf);
         
         // appends task's name, start, and end hour to new schedule
         dailySchedule.push(taskName);
         dailySchedule.push(startHour);
         dailySchedule.push(endHour);
+
+        console.log ("Schedule: " + dailySchedule);
+        console.log ("occupiedHours: " + occupiedHours);
+        console.log ("availableHours: " + availableHours);
     }
 }
 
@@ -281,3 +319,5 @@ function hasConsecutiveHours(array, start, sequenceLength) {
     }
     return false;
 }
+
+// end of gary's workspace
