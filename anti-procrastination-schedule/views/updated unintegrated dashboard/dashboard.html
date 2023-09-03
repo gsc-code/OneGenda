@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="dashboardstyle.css">
+
+        <!-- possible font (currently not used) -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+
+    </head>
+
+    <body> <!-- add onload -->
+        <header>
+            <div class="navbar">
+                <div class="logo"><a href="#">Anti-Procrastination Schedule</a></div>
+                <ul class="links">
+                    <li><a href="index.html">Home</a></li>
+                    <li id="dashboard">
+                        <a class="active" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li><a href="calendar.html">Calendar</a></li>
+                </ul>
+                <div id="google-signin">
+                    <script src="https://accounts.google.com/gsi/client"></script>
+                    <script src="https://apis.google.com/js/client.js"></script>
+                    <div>
+                        <img class="action-btn" src="normal_light_button.png" onclick="signIn()"> <!-- add other signin icon lol -->
+                    </div>
+                </div>
+                <img id="profile-icon" href="dashboard.html">
+                <div class="toggle_btn">
+                    <svg class="fa-regular fa-bars" stroke="currentColor "fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
+                </div>
+            </div>
+            <div class="dropdown_menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="calendar.html">Your Calendar</a></li>
+                <li>
+                    <div id="google-signin">
+                        <script src="https://accounts.google.com/gsi/client"></script>
+                        <script src="https://apis.google.com/js/client.js"></script>
+                        <div>
+                            <img class="action-btn" src="normal_light_button.png" onclick="signIn()"> 
+                        </div>
+                    </div>
+                </li>
+                <img id="profile-icon" href="dashboard.html">
+            </div>
+        </header>
+
+        <script>
+            const toggleBtn = document.querySelector('.toggle_btn')
+            const toggleBtnIcon = document.querySelector('.toggle_btn svg')
+            const dropDownMenu = document.querySelector('.dropdown_menu')
+
+            toggleBtn.onclick = function() {
+                dropDownMenu.classList.toggle('open')
+                const isOpen = dropDownMenu.classList.contains('open')
+
+                toggleBtnIcon.classList = isOpen
+                    ? '✕'
+                    : '☰'
+            }
+        </script>
+
+        <!-- body stuff -->
+        <div id="items">
+            <div class="section profile">
+                <p>Profile</p>
+            </div>
+            <div class="section-wrapper">
+                <div class="section calendar">
+                    <p>Calendar</p>
+                </div>
+                <div class="section tasks">
+                    <p>Tasks</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
