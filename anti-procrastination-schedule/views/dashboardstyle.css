@@ -70,7 +70,7 @@ header {
 }
 
 /* login button */
-.action-btn {
+/* .action-btn {
     color: #fff;
     border-radius: 35px;
     border: none;
@@ -88,6 +88,18 @@ header {
 
 .action-btn:active {
     scale: 0.95;
+} */
+
+div img:last-child {
+    display: none;  
+}
+div:hover img:last-child {
+    display: block;
+    cursor: pointer;
+}
+div:hover img:first-child {
+    display: none;
+    cursor: pointer;
 }
 
 /* dropdown menu */
@@ -163,6 +175,15 @@ header {
 
 .section.tasks {
     margin-top: 20px;
+}
+
+.description {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 8%;
+    margin: 50px 25%;
+    background: whitesmoke;
 }
 
 /* responsive sections */

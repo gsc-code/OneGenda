@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard</title>
         <link rel="stylesheet" href="dashboardstyle.css">
+        <script src="script.js" defer></script>
 
         <!-- possible font (currently not used) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +15,7 @@
 
     </head>
 
-    <body> <!-- add onload -->
+    <body onload="updateDashboard()">
         <header>
             <div class="navbar">
                 <div class="logo"><a href="#">Anti-Procrastination Schedule</a></div>
@@ -29,7 +30,8 @@
                     <script src="https://accounts.google.com/gsi/client"></script>
                     <script src="https://apis.google.com/js/client.js"></script>
                     <div>
-                        <img class="action-btn" src="normal_light_button.png" onclick="signIn()"> <!-- add other signin icon lol -->
+                        <img class="action-btn" src="normal_light_button.png" onclick="signIn()">
+                        <!-- <img class="action-btn" src="pressed_light_button.png" onclick="signIn()"> - the class hover thing doesnt work on the actual website -->
                     </div>
                 </div>
                 <img id="profile-icon" href="dashboard.html">
@@ -46,7 +48,8 @@
                         <script src="https://accounts.google.com/gsi/client"></script>
                         <script src="https://apis.google.com/js/client.js"></script>
                         <div>
-                            <img class="action-btn" src="normal_light_button.png" onclick="signIn()"> 
+                            <img src="normal_light_button.png" onclick="signIn()">
+                            <img src="pressed.png" onclick="signIn()">
                         </div>
                     </div>
                 </li>
@@ -70,7 +73,12 @@
         </script>
 
         <!-- body stuff -->
-        <div id="items">
+
+        <div id="not-signed-in" style="visibility: hidden" class="description">
+            <p>Please sign in to access your dashboard.</p>
+        </div>
+
+        <div id="items" style="visibility: visible">
             <div class="section profile">
                 <p>Profile</p>
             </div>

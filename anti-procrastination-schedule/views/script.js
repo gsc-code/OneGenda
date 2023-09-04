@@ -10,7 +10,7 @@ const googleSignin = document.getElementById("google-signin");
 const dashboardButton = document.getElementById("dashboard");
 const profileIcon = document.getElementById("profile-icon"); 
 const notSignedIn = document.getElementById("not-signed-in");
-const dashboardContent = document.getElementById("dashboard-content");
+const dashboardContent = document.getElementById("items");
 
 const clientId = '314363292248-0hkj8at161r1o3og4fgqjs604s35e9m5.apps.googleusercontent.com';
 const scopes = 'https://www.googleapis.com/auth/calendar';
@@ -61,7 +61,7 @@ async function makeApiCall() {
     const response = await gapi.client.calendar.events.list(request);
     console.log(response);
 
-    const events = response.result.items;
+    const events = response.result.dashboardContent;
     // events[i].start.date // event start date
     // events[i].summary // event description
 
@@ -72,7 +72,7 @@ async function makeApiCall() {
     //     document.getElementById('events').appendChild(li);
     // }
 
-    // const freeBusy = await gapi.client.calendar.freebusy.query({ 'timeMin': (new Date()).toISOString(), 'timeMax': (new Date().addDays(1)).toISOString(), 'items': [{ 'id': 'primary' }] })
+    // const freeBusy = await gapi.client.calendar.freebusy.query({ 'timeMin': (new Date()).toISOString(), 'timeMax': (new Date().addDays(1)).toISOString(), 'dashboardContent': [{ 'id': 'primary' }] })
 }
 
 // Handle response from Google
@@ -116,7 +116,7 @@ function updateHome() {
         googleSignin.hidden = false;
     }
 }
-/*
+
 function updateDashboard() {
     if (getWithExpiry("RESPONSE")) {
         googleSignin.hidden = true;
@@ -134,8 +134,8 @@ function updateDashboard() {
         googleSignin.hidden = false;
     }
 }
-*/
-// Set expiration time for items in the browser's local storage
+
+// Set expiration time for dashboardContent in the browser's local storage
 function setWithExpiry(key, value, ttl) {
 	const now = new Date();
 	const item = {
@@ -148,11 +148,11 @@ function setWithExpiry(key, value, ttl) {
 
 // Check if an item has expired and delete if so
 function getWithExpiry(key) {
-	const itemStr = localStorage.getItem(key);
-	if (!itemStr) {
+	const dashboardContenttr = localStorage.getItem(key);
+	if (!dashboardContenttr) {
 		return null;
 	}
-	const item = JSON.parse(itemStr);
+	const item = JSON.parse(dashboardContenttr);
 	const now = new Date();
 	if (now.getTime() > item.expiry) {
         localStorage.clear();
