@@ -69,6 +69,16 @@ header {
     display: none;
 }
 
+/* profile icon */
+#profile-icon {
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    border-radius: 50%;
+    margin-top: -18px;
+    margin-left: -25px;
+}
+
 /* login button */
 /* .action-btn {
     color: #fff;
