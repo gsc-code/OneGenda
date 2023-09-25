@@ -7,12 +7,13 @@ var userEmail;
 
 // HTML Elements
 const googleSignin = document.getElementById("google-signin");
+const googleSignin2 = document.getElementById("google-signin-2");
 const dashboardButton = document.getElementById("dashboard");
 const profileIcon = document.getElementById("profile-icon"); 
 const notSignedIn = document.getElementById("not-signed-in");
 const dashboardContent = document.getElementById("items");
 
-const clientId = '314363292248-0hkj8at161r1o3og4fgqjs604s35e9m5.apps.googleusercontent.com';
+const clientId = '314363292248-t98fvdcsa4nmf3nnpetvlusg69n8k0bm.apps.googleusercontent.com';
 const scopes = 'https://www.googleapis.com/auth/calendar';
 const client = google.accounts.oauth2.initTokenClient({
     client_id: clientId,
@@ -120,6 +121,7 @@ function updateHome() {
 function updateDashboard() {
     if (getWithExpiry("RESPONSE")) {
         googleSignin.hidden = true;
+        googleSignin2.hidden = true;
         dashboardButton.hidden = false;
         dashboardButton.setAttribute("class", "active");
         profileIcon.hidden = false;
@@ -132,6 +134,7 @@ function updateDashboard() {
         dashboardContent.setAttribute("style", "visibility: hidden");
         profileIcon.hidden = true;
         googleSignin.hidden = false;
+        googleSignin2.hiddn = false;
     }
 }
 
