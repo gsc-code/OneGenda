@@ -1,5 +1,5 @@
 // Lines 1-165: ruohan's workspace
-// Lines 170-285: gary's workspace
+// Lines 170-346: gary's workspace
 
 var userFullName;
 var userImageURL;
@@ -291,38 +291,35 @@ function sortHours(array) {
     console.log(array);
 }
 
-function newSchedule() {
-    dailySchedule = [];
-    var noConflict = true;
-    for (let i = 0; i < tasks.length/2; i++) {
-        // pulls name and duration of task from tasks array
-        var taskName = tasks[i*2-1];
-        var taskLength = tasks[i*2];
-
-        // re-generates assigned hours until sutible hours are found
-        while (noConflict == false) {
-            // selects random available hour to start task
-            var index = randomNumber(0, availableHours.length);
-            var startHour = availableHours[index];
-
-            // identifies ending hour of task based on inputted duration
-            var endHour = startHour + taskLength;
-
-            // checks if consecutive hours are available
-            noConflict = hasConsecutiveHours(availableHours, startHour, taskLength);
-            
-        }
-        // updates occupiedHours array with new assigned hours
-        occupiedHours = occupiedHours.concat(availableHours.slice(index, index + taskLength));
-        
-        // removes assigned task hours from availableHours array
-        availableHours = availableHours.splice(index, index + taskLength);
-        
-        // appends task's name, start, and end hour to new schedule
-        dailySchedule.push(taskName);
-        dailySchedule.push(startHour);
-        dailySchedule.push(endHour);
+function newScheduledTask(taskName, startHour, endHour) {
+    var taskHours = [];
+    // creates array of occupying hours of new task
+    for (let i = startHour; i < endHour+1; i++) {
+        taskHours.push(i);
     }
+    // checks for any overlapping hours
+    for (let i = 0; i < taskHours.length/3; i++) {
+        let item = taskHours[i];
+        for (let j = 0; j < occupiedHours.length; j++) {
+            if (item == occupiedHours[j]) {
+                // returns "unavailable" if hours overlap
+                return "unavailable";
+            }
+        }
+    }
+    // updates list of occupied hours
+    occupiedHours = occupiedHours.concat(taskHours);
+    sortHours(occupiedHours);
+    // updates list of available hours
+    for (let i = 0; i < taskHours.length; i++) {
+        let item = taskHours[i];
+        for (let j = 0; j < availableHours.length; j++) {
+            if (item == availableHours[j]) {
+                availableHours.splice(j, 1);
+            }
+        }
+    }
+    return [taskName, startHour, endHour];
 }
 
 function randomNumber(min, max) {
