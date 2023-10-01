@@ -1,5 +1,5 @@
-// Lines 1-165: ruohan's workspace
-// Lines 170-346: gary's workspace
+// Lines 1-170: ruohan's workspace
+// Lines 170+: gary's workspace
 
 var userFullName;
 var userImageURL;
