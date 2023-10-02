@@ -196,7 +196,6 @@ var dailySchedule = [];
 // checks if task hours overlaps with any previous tasks
 // returns [task-name, start-hour, end-hour] if hours don't overlap
 function newSchedule() {
-    dailySchedule = [];
     var count = 0;
     for (let i = 0; i < tasks.length/2; i++) {
         var noConflict = false;
@@ -258,7 +257,6 @@ function newSchedule() {
             sortHours(occupiedHours);        
         }
 
-        
         var firstHalf = availableHours.splice(0, index);
         var secondHalf = availableHours.splice(taskLength, availableHours.length - 1);
 
@@ -266,9 +264,6 @@ function newSchedule() {
 
         // removes assigned task hours from availableHours array
         availableHours = firstHalf.concat(secondHalf);
-        
-
-        //availableHours = availableHours.splice(index, index + tasklength - 1);
 
         // appends task's name, start, and end hour to new schedule
         dailySchedule.push(taskName);
@@ -341,3 +336,103 @@ function hasConsecutiveHours(array, start, sequenceLength) {
     }
     return false;
 }
+
+function updateGCalendar() {
+    dailySchedule = [];
+
+    availableHours = dayHours;
+    occupiedHours = [];
+
+    injectScheduledTasks();
+
+    console.log(newSchedule());
+
+    for (let a = 0; a < dailySchedule.length/3; a++) {
+        addGEvent(i*3, i*3 + 1, i*3 + 2);
+    }
+}
+
+function injectScheduledTasks() {
+    for (let b = 0; b < scheduledTasks.length/3; b++) {
+
+        const taskName = scheduledTasks[b*3];
+        const startHour = scheduledTasks[b*3];
+        const endHour = scheduledTasks[b*3];
+        const taskLength = endHour - startHour;
+
+        const index = availableHours.indexOf(startHour)
+
+        // updates occupiedHours array with new assigned hours
+        if (taskLength <= 1) {
+            occupiedHours.push(startHour);
+            sortHours(occupiedHours);
+        } else {
+            occupiedHours = occupiedHours.concat(availableHours.slice(index, index + taskLength));
+            sortHours(occupiedHours);        
+        }
+
+        var firstHalf = availableHours.splice(0, index);
+        var secondHalf = availableHours.splice(taskLength, availableHours.length - 1);
+
+        console.log("parts: " + firstHalf + " + " + secondHalf);
+
+        // removes assigned scheduled task hours from availableHours array
+        availableHours = firstHalf.concat(secondHalf);
+
+        // appends scheduled task's name, start, and end-hour to tasks list
+        dailySchedule.push(taskName);
+        dailySchedule.push(startHour);
+        dailySchedule.push(endHour - 1);
+    }
+}
+
+function addGEvent(taskName, startHour, endHour) {
+
+    var start = startHour;
+    var end = endHour;
+
+    // Create a new instance of Intl.DateTimeFormat
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Print the user's timezone
+    console.log("User's Timezone: " + userTimeZone);
+
+    // Create a new Date object
+    const currentDate = new Date();
+
+    // Print the current date and time
+    console.log("Current date: " + currentDate);
+
+    const initialTimeInfo = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDay()
+
+    if (start <= 9) {
+        start = '0' + start;
+    }
+
+    if (end <= 9) {
+        end = '0' + end;
+    }
+
+    const event = {
+        'summary': taskName,
+        'start': {
+          'dateTime': initialTimeInfo + 'T' + (end + ':00:00') + '-00:00',
+          'timeZone': userTimeZone
+        },
+        'end': {
+          'dateTime': initialTimeInfo + 'T' + (end + ':00:00') + '-00:00',
+          'timeZone': userTimeZone
+        },
+      };
+      
+      const request = gapi.client.calendar.events.insert({
+        'calendarId': 'primary',
+        'resource': event
+      });
+      
+      request.execute(function(event) {
+        appendPre('Event created: ' + event.htmlLink);
+      });
+}
+
+// console.log(calanderList.get());
