@@ -172,11 +172,9 @@ function getWithExpiry(key) {
 
 // Algorithmic backend work (gary)
 
-// 8/31 Update: created schedule-generating algorithm (not including preset tasks yet)
-// WARNING: algorithm currently does NOT have a way to check if such available consecutive hours exists and if not will get stuck in an infinite loop. Will try to fix soon :P
+// 10/2 Update: implemented GCalendar event creation and complete schedule generation process
+//              still need to debug GCalendar event creation for any errors
 // also I didnt include than many comments on how the algo works or console logs yet cus messy so sry if its hard to understand
-
-// NOTE: pls replace the proper user-id info for variables and data cus idk how to do it
 
 const dayHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 var availableHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
@@ -317,8 +315,9 @@ function newScheduledTask(taskName, startHour, endHour) {
     return [taskName, startHour, endHour];
 }
 
+// min and max parameters are both inclusive
 function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1));
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function hasConsecutiveHours(array, start, sequenceLength) {
@@ -405,6 +404,7 @@ function addGEvent(taskName, startHour, endHour) {
 
     const initialTimeInfo = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDay()
 
+    // adjusts numerical syntax of hours
     if (start <= 9) {
         start = '0' + start;
     }
