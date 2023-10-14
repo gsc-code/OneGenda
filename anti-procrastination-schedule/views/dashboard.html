@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard</title>
-        <link rel="stylesheet" href="dashboardstyle.css">
+        <link rel="stylesheet" href="style.css">
         <script src="script.js" defer></script>
 
         <!-- possible font (currently not used) -->
@@ -16,82 +16,39 @@
     </head>
 
     <body onload="updateDashboard()">
-        <header>
-            <div class="navbar">
-                <div class="logo"><a href="#">Anti-Procrastination Schedule</a></div>
-                <ul class="links">
+        <section id="header">
+            <a>Anti-Procrastination Schedule</a>
+            <nav>
+                <ul id="navbar">
                     <li><a href="index.html">Home</a></li>
+                    <li>
+                        <div id="google-signin" hidden="true">
+                            <script src="https://accounts.google.com/gsi/client"></script>
+                            <script src="https://apis.google.com/js/client.js"></script>
+                            <div>
+                                <img src="normal_light_button.png" onclick="signIn()">
+                                <img src="pressed_light_button.png" onclick="signIn()">
+                            </div>
+                        </div>
+                    </li>
                     <li id="dashboard">
                         <a class="active" href="dashboard.html">Dashboard</a>
                     </li>
-                    <li><a href="calendar.html">Calendar</a></li>
+                    <li><img id="profile-icon" href="dashboard.html"></li>
                 </ul>
-                <div id="google-signin">
-                    <script src="https://accounts.google.com/gsi/client"></script>
-                    <script src="https://apis.google.com/js/client.js"></script>
-                    <div>
-                        <img src="normal_light_button.png" onclick="signIn()"> <!--- class="action-btn" --->
-                        <img src="pressed_light_button.png" onclick="signIn()">
-                    </div>
-                </div>
-                <img id="profile-icon" href="dashboard.html">
-                <div class="toggle_btn">
-                    <svg class="fa-regular fa-bars" stroke="currentColor "fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
-                </div>
-            </div>
-            <div class="dropdown_menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-                <li>
-                    <div id="google-signin-2">
-                        <script src="https://accounts.google.com/gsi/client"></script>
-                        <script src="https://apis.google.com/js/client.js"></script>
-                        <div>
-                            <img src="normal_light_button.png" onclick="signIn()">
-                            <img src="pressed_light_button.png" onclick="signIn()">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <img id="profile-icon" href="dashboard.html">
-                </li>
-            </div>
-        </header>
-
-        <script>
-            const toggleBtn = document.querySelector('.toggle_btn')
-            const toggleBtnIcon = document.querySelector('.toggle_btn svg')
-            const dropDownMenu = document.querySelector('.dropdown_menu')
-
-            toggleBtn.onclick = function() {
-                dropDownMenu.classList.toggle('open')
-                const isOpen = dropDownMenu.classList.contains('open')
-
-                toggleBtnIcon.classList = isOpen
-                    ? '✕'
-                    : '☰'
-            }
-        </script>
-
-        <!-- body stuff -->
+            </nav>
+        </section>
 
         <div id="not-signed-in" style="visibility: hidden" class="description">
+            <h4>Page Not Found</h4>
             <p>Please sign in to access your dashboard.</p>
         </div>
 
-        <div id="items" style="visibility: visible">
-            <div class="section profile">
-                <p>Profile</p>
-            </div>
-            <div class="section-wrapper">
-                <div class="section calendar">
-                    <p>Calendar</p>
-                </div>
-                <div class="section tasks">
-                    <p>Tasks</p>
-                </div>
-            </div>
+        <div id="dashboard-content" style="visibility: visible">
+
+            <!-- ALL DASHBOARD CONTENT HERE -->
+
         </div>
+
     </body>
 </html>
