@@ -140,6 +140,7 @@ a {
 }
 
 
+
 /* Dashboard Style */
 
 /* Left column */
@@ -195,4 +196,14 @@ a {
     border-radius: 8px;
     height: 30px;
     padding: 10px;
+}
+
+
+/* Calendar Page Style */
+
+.calendar-content {
+    display: flex;
+    align-items: center;
+    padding: 20px 8%;
+    background: white;
 }
