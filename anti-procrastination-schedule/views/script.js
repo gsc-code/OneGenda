@@ -96,27 +96,15 @@ async function handleCredentialResponse(response) {
         dashboardButton.hidden = false;
         calendarButton.hidden = false;
         console.log("signed in");
-        if (window.location.href == "/" || window.location.href == "/index.html") {
-            // if on home page, redirect to dashboard page
+        if (googleSignin.getAttribute("data-target") == "dashboard") {
+            // if target page is dashboard, redirect to dashboard page
             window.location.replace("/dashboard.html");
-        } else if (window.location.href == "/calendar.html") {
-            // if on calendar page, reload and update page
-            window.location.reload();
-            profileIcon.hidden = false;
-            profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
-            calendarButton.hidden = false;
-            notSignedIn.setAttribute("style", "display: none");
-            calendarContent.setAttribute("style", "display: block");
-            calendarButton.className = "active";
+        } else if (googleSignin.getAttribute("data-target") == "calendar") {
+            // if target page is calendar, redirect to calendar page
+            window.location.replace("/calendar.html");
         } else {
-            // if on dashboard page, reload and update page
-            window.location.reload();
-            profileIcon.hidden = false;
-            profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
-            calendarButton.hidden = false;
-            notSignedIn.setAttribute("style", "display: none");
-            dashboardContent.setAttribute("style", "display: block");
-            dashboardButton.className = "active";
+            // otherwise, redirect to dashboard page
+            window.location.replace("/dashboard.html");
         }
     } else {
         // not signed in, redirect to home page
