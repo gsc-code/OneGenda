@@ -201,7 +201,7 @@ a {
 
 /* Calendar Page Style */
 
-.calendar-content {
+#calendar-content {
     display: flex;
     align-items: center;
     padding: 20px 8%;
