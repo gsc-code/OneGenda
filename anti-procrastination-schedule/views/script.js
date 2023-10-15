@@ -1,6 +1,7 @@
 // Lines 1-170: ruohan's workspace
 // Lines 170+: gary's workspace
 
+// User Info
 var userFullName;
 var userImageURL;
 var userEmail;
@@ -8,9 +9,13 @@ var userEmail;
 // HTML Elements
 const googleSignin = document.getElementById("google-signin");
 const dashboardButton = document.getElementById("dashboard");
+const calendarButton = document.getElementById("calendar");
 const profileIcon = document.getElementById("profile-icon"); 
 const notSignedIn = document.getElementById("not-signed-in");
 const dashboardContent = document.getElementById("dashboard-content");
+const calendarContent = document.getElementById("calendar-content");
+const userCalendar = document.getElementById("gcalendar");
+
 
 const clientId = '314363292248-t98fvdcsa4nmf3nnpetvlusg69n8k0bm.apps.googleusercontent.com';
 const scopes = 'https://www.googleapis.com/auth/calendar';
@@ -61,44 +66,64 @@ async function makeApiCall() {
     const response = await gapi.client.calendar.events.list(request);
     console.log(response);
 
+    /*
     const events = response.result.dashboardContent;
-    // events[i].start.date // event start date
-    // events[i].summary // event description
+
+    events[i].start.date // event start date
+    events[i].summary // event description
 
     // Test
-    // for (var i = 0; i < events.length; i++) {
-    //     var li = document.createElement('li');
-    //     li.appendChild(document.createTextNode(`${events[i].start.date} ${events[i].summary}`));
-    //     document.getElementById('events').appendChild(li);
-    // }
+    for (var i = 0; i < events.length; i++) {
+        var li = document.createElement('li');
+        li.appendChild(document.createTextNode(`${events[i].start.date} ${events[i].summary}`));
+        document.getElementById('events').appendChild(li);
+    }
 
-    // const freeBusy = await gapi.client.calendar.freebusy.query({ 'timeMin': (new Date()).toISOString(), 'timeMax': (new Date().addDays(1)).toISOString(), 'dashboardContent': [{ 'id': 'primary' }] })
+    const freeBusy = await gapi.client.calendar.freebusy.query({ 'timeMin': (new Date()).toISOString(), 'timeMax': (new Date().addDays(1)).toISOString(), 'dashboardContent': [{ 'id': 'primary' }] })
+    */
+
 }
 
 // Handle response from Google
 async function handleCredentialResponse(response) {
     if (response) {
+        // signed in
         console.log(response);
         setWithExpiry("RESPONSE", response, 60000); // actual Google token expires in 3599 seconds (~ 1 hr) = 3599000 ms
         gapi.client.setToken(response);
         await makeApiCall();
         googleSignin.hidden = true;
         dashboardButton.hidden = false;
+        calendarButton.hidden = false;
         console.log("signed in");
-        if (window.location.href != "/dashboard.html") {
+        if (window.location.href == "/" || window.location.href == "/index.html") {
+            // if on home page, redirect to dashboard page
             window.location.replace("/dashboard.html");
-        } else {
+        } else if (window.location.href == "/calendar.html") {
+            // if on calendar page, reload and update page
             window.location.reload();
             profileIcon.hidden = false;
             profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
+            calendarButton.hidden = false;
+            notSignedIn.setAttribute("style", "display: none");
+            calendarContent.setAttribute("style", "display: block");
+            calendarButton.className = "active";
+        } else {
+            // if on dashboard page, reload and update page
+            window.location.reload();
+            profileIcon.hidden = false;
+            profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
+            calendarButton.hidden = false;
             notSignedIn.setAttribute("style", "display: none");
             dashboardContent.setAttribute("style", "display: block");
             dashboardButton.className = "active";
         }
     } else {
+        // not signed in, redirect to home page
         console.log("not signed in");
         window.location.replace("/");
         dashboardButton.hidden = true;
+        calendarButton.hidden = true;
         googleSignin.hidden = false;
         googleSignin.click = signIn();
     }    
@@ -106,36 +131,68 @@ async function handleCredentialResponse(response) {
 
 function updateHome() {
     if (getWithExpiry("RESPONSE")) {
+        // signed in
         dashboardButton.hidden = false;
         profileIcon.hidden = false;
         profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
+        calendarButton.hidden = false;
         googleSignin.hidden = true;
     } else {
+        // not signed in
         dashboardButton.hidden = true;
         profileIcon.hidden = true;
+        calendarButton.hidden = true;
         googleSignin.hidden = false;
     }
 }
 
 function updateDashboard() {
     if (getWithExpiry("RESPONSE")) {
+        // signed in
         googleSignin.hidden = true;
-        // googleSignin2.hidden = true;
         dashboardButton.hidden = false;
-        dashboardButton.setAttribute("class", "active");
+        dashboardButton.className = "active";
         profileIcon.hidden = false;
         profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
+        calendarButton.hidden = false;
         notSignedIn.setAttribute("style", "display: none");
         dashboardContent.setAttribute("style", "display: block");
     } else {
+        // not signed in
         dashboardButton.hidden = true;
+        calendarButton.hidden = true;
         notSignedIn.setAttribute("style", "display: block");
         dashboardContent.setAttribute("style", "display: none");
         profileIcon.hidden = true;
         googleSignin.hidden = false;
-        // googleSignin2.hiddn = false;
     }
 }
+
+function updateCalendar() {
+    if (getWithExpiry("RESPONSE")) {
+        // signed in
+        googleSignin.hidden = true;
+        dashboardButton.hidden = false;
+        profileIcon.hidden = false;
+        profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
+        calendarButton.hidden = false;
+        calendarButton.className = "active";
+        notSignedIn.setAttribute("style", "display: none");
+        calendarContent.setAttribute("style", "display: block");
+
+        userCalendar.setAttribute("src", "https://calendar.google.com/calendar/embed?src=" + encodeURIComponent(getWithExpiry("userEmail")) + "&ctz=America%2FLos_Angeles");
+
+    } else {
+        // not signed in
+        dashboardButton.hidden = true;
+        calendarButton.hidden = true;
+        notSignedIn.setAttribute("style", "display: block");
+        calendarContent.setAttribute("style", "display: none");
+        profileIcon.hidden = true;
+        googleSignin.hidden = false;
+    }
+}
+
 
 // Set expiration time for dashboardContent in the browser's local storage
 function setWithExpiry(key, value, ttl) {
