@@ -39,16 +39,53 @@
             </nav>
         </section>
 
-        <div id="not-signed-in" style="visibility: hidden" class="description">
+        <div id="not-signed-in" style="display: none" class="description"> <!-- style="visibility: hidden" -->
             <h4>Page Not Found</h4>
             <p>Please sign in to access your dashboard.</p>
         </div>
 
-        <div id="dashboard-content" style="visibility: visible">
+        <div id="dashboard-content" style="display: block"> <!-- style="visibility: visible" -->
 
-            <!-- ALL DASHBOARD CONTENT HERE -->
+            <div class="row">
+
+                <div class="leftcolumn">
+                    <div class="card">
+                        <h2>Profile</h2>
+                        <p></p>
+                    </div>
+                    <div class="card">
+                        <h3>Title</h3>
+                        <p>Text...</p>
+                    </div>
+                    <div class="card">
+                        <h3>Title</h3>
+                        <p>Text...</p>
+                    </div>
+                </div>
+
+                <div class="rightcolumn">
+                    <div class="card">
+                        <h4>Add task</h4>
+                        <h5>......</h5><br>
+                        <form action="/calendar.html" method="get">
+                            <label for="task-name">Task Name:</label><br>
+                            <input type="text" id="task-name" name="tname" class="textbox"><br><br>
+                            <label for="task-length">Task Length (hours):</label><br>
+                            <input type="number" id="task-length" name="tlength" class="textbox"><br><br>
+                            <label for="task-duedate">Due Date</label><br>
+                            <input type="date" id="task-duedate" name="tduedate" class="date-input"><br><br>
+                            <input type="submit" value="Submit" id="submit-button" name="tsubmit">
+                        </form>
+                    </div>
+                    <div class="card">
+                        <h3>Title</h3>
+                        <h5>Title description...</h5>
+                        <p>Text...</p>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
-
     </body>
 </html>

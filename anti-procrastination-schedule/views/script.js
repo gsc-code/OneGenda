@@ -7,11 +7,10 @@ var userEmail;
 
 // HTML Elements
 const googleSignin = document.getElementById("google-signin");
-const googleSignin2 = document.getElementById("google-signin-2");
 const dashboardButton = document.getElementById("dashboard");
 const profileIcon = document.getElementById("profile-icon"); 
 const notSignedIn = document.getElementById("not-signed-in");
-const dashboardContent = document.getElementById("items");
+const dashboardContent = document.getElementById("dashboard-content");
 
 const clientId = '314363292248-t98fvdcsa4nmf3nnpetvlusg69n8k0bm.apps.googleusercontent.com';
 const scopes = 'https://www.googleapis.com/auth/calendar';
@@ -92,8 +91,8 @@ async function handleCredentialResponse(response) {
             window.location.reload();
             profileIcon.hidden = false;
             profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
-            notSignedIn.setAttribute("style", "visibility: hidden");
-            dashboardContent.setAttribute("style", "visibility: visible");
+            notSignedIn.setAttribute("style", "display: none");
+            dashboardContent.setAttribute("style", "display: block");
             dashboardButton.className = "active";
         }
     } else {
@@ -121,20 +120,20 @@ function updateHome() {
 function updateDashboard() {
     if (getWithExpiry("RESPONSE")) {
         googleSignin.hidden = true;
-        googleSignin2.hidden = true;
+        // googleSignin2.hidden = true;
         dashboardButton.hidden = false;
         dashboardButton.setAttribute("class", "active");
         profileIcon.hidden = false;
         profileIcon.setAttribute("src", getWithExpiry("userImageURL"));
-        notSignedIn.setAttribute("style", "visibility: hidden");
-        dashboardContent.setAttribute("style", "visibility: visible");
+        notSignedIn.setAttribute("style", "display: none");
+        dashboardContent.setAttribute("style", "display: block");
     } else {
         dashboardButton.hidden = true;
-        notSignedIn.setAttribute("style", "visibility: visible");
-        dashboardContent.setAttribute("style", "visibility: hidden");
+        notSignedIn.setAttribute("style", "display: block");
+        dashboardContent.setAttribute("style", "display: none");
         profileIcon.hidden = true;
         googleSignin.hidden = false;
-        googleSignin2.hiddn = false;
+        // googleSignin2.hiddn = false;
     }
 }
 
