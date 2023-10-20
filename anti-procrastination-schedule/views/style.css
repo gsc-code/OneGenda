@@ -132,7 +132,7 @@ a {
     justify-content: space-between;
     padding: 20px 8%;
     margin: 50px 25%;
-    background: whitesmoke;
+    background: rgb(255, 255, 255, 0.4);
 }
 
 .separator {
@@ -160,7 +160,7 @@ a {
 
 /* Add card effect */
 .card {
-    background-color: whitesmoke;
+    background-color: rgb(255, 255, 255, 0.4);
     padding: 20px;
     margin-top: 20px;
 }
