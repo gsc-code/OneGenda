@@ -15,6 +15,9 @@ const notSignedIn = document.getElementById("not-signed-in");
 const dashboardContent = document.getElementById("dashboard-content");
 const calendarContent = document.getElementById("calendar-content");
 const userCalendar = document.getElementById("gcalendar");
+const submitBtn = document.getElementById("submit-button");
+
+submitBtn.addEventListener("click", addTask());
 
 
 const clientId = '314363292248-t98fvdcsa4nmf3nnpetvlusg69n8k0bm.apps.googleusercontent.com';
@@ -154,6 +157,15 @@ function updateDashboard() {
         profileIcon.hidden = true;
         googleSignin.hidden = false;
     }
+}
+
+function addTask() {
+    const taskName = document.getElementById("task-name").value;
+    const taskLength = document.getElementById("task-length").value;
+    const taskDueDate = document.getElementById("task-duedate").value;
+
+    newTask(taskName, taskLength);
+
 }
 
 function updateCalendar() {
@@ -320,7 +332,7 @@ function newSchedule() {
 }
 
 function newTask(taskName, hours) {
-    task.push(taskName, hours);
+    tasks.push(taskName, hours);
 }
 
 function sortHours(array) {
