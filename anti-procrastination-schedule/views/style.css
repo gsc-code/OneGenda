@@ -131,6 +131,7 @@ a {
 }
 
 .description {
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -164,6 +165,7 @@ a {
 
 /* Add card effect */
 .card {
+    border-radius: 5px;
     background-color: rgb(255, 255, 255, 0.4);
     padding: 20px;
     margin-top: 20px;
@@ -184,21 +186,22 @@ a {
     }
 
 .textbox {
-    border-radius: 8px;
+    border-radius: 5px;
     height: 30px;
     width: 300px;
     padding: 20px;
 }
 
 .date-input {
-    border-radius: 8px;
+    border-radius: 5px;
     height: 30px;
     padding: 20px;
 }
 
 #submit-button {
-    border-radius: 8px;
+    border-radius: 5px;
     height: 30px;
+    width: 100px;
     padding: 10px;
 }
 
