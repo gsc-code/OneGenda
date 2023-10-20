@@ -17,8 +17,6 @@ const calendarContent = document.getElementById("calendar-content");
 const userCalendar = document.getElementById("gcalendar");
 const submitBtn = document.getElementById("submit-button");
 
-submitBtn.addEventListener("click", addTask());
-
 
 const clientId = '314363292248-t98fvdcsa4nmf3nnpetvlusg69n8k0bm.apps.googleusercontent.com';
 const scopes = 'https://www.googleapis.com/auth/calendar';
@@ -148,6 +146,7 @@ function updateDashboard() {
         calendarButton.hidden = false;
         notSignedIn.setAttribute("style", "display: none");
         dashboardContent.setAttribute("style", "display: block");
+        submitBtn.addEventListener("click", addTask());
     } else {
         // not signed in
         dashboardButton.hidden = true;
