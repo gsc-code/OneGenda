@@ -146,7 +146,7 @@ function updateDashboard() {
         calendarButton.hidden = false;
         notSignedIn.setAttribute("style", "display: none");
         dashboardContent.setAttribute("style", "display: block");
-        submitBtn.addEventListener("click", addTask());
+        // submitBtn.addEventListener("click", addTask());
     } else {
         // not signed in
         dashboardButton.hidden = true;
