@@ -16,6 +16,8 @@ const dashboardContent = document.getElementById("dashboard-content");
 const calendarContent = document.getElementById("calendar-content");
 const userCalendar = document.getElementById("gcalendar");
 const submitBtn = document.getElementById("submit-button");
+const addedTasksUl = document.getElementById("added-tasks");
+const scheduledTasksUl = document.getElementById("scheduled-tasks");
 
 
 const clientId = '314363292248-t98fvdcsa4nmf3nnpetvlusg69n8k0bm.apps.googleusercontent.com';
@@ -52,9 +54,9 @@ async function makeApiCall() {
     
     // 1 hr = 3600000
     // test - 1 min = 60000
-    setWithExpiry("userFullName", userFullName, 60000);
-    setWithExpiry("userImageURL", userImageURL, 60000);
-    setWithExpiry("userEmail", userEmail, 60000);
+    setWithExpiry("userFullName", userFullName, 3600000);
+    setWithExpiry("userImageURL", userImageURL, 3600000);
+    setWithExpiry("userEmail", userEmail, 3600000);
 
     const request = {
         'calendarId': 'primary',
@@ -160,11 +162,39 @@ function updateDashboard() {
 
 function addTask() {
     const taskName = document.getElementById("task-name").value;
-    const taskLength = document.getElementById("task-length").value;
-    const taskDueDate = document.getElementById("task-duedate").value;
+    const taskLength = parseInt(document.getElementById("task-length").value);
+    // const taskDueDate = document.getElementById("task-duedate").value;
 
     newTask(taskName, taskLength);
+    addTaskToDB(taskName, taskLength, false);
+}
 
+function addScheduledTask() {
+    const taskName = document.getElementById("sched-task-name").value;
+    const startHour = parseInt(document.getElementById("sched-task-start").value);
+    const endHour = parseInt(document.getElementById("sched-task-end").value);
+    const taskLength = 0;
+
+    if (endHour < startHour) {
+        newScheduledTask(taskName, 1, endHour);
+        newScheduledTask(taskName, startHour, 24);
+        taskLength = (endHour - 1) + (24 - startHour);
+    } else {
+        newScheduledTask(taskName, startHour, endHour);
+        taskLength = endHour - startHour;
+    }
+
+    addTaskToDB(taskName, taskLength, true);
+}
+
+function addTaskToDB(taskName, taskLength, scheduled) {
+    const task = document.createElement("li");
+    task.innerHTML = taskName + ": " + taskLength + " hours";
+    if (scheduled) {
+        scheduledTasksUl.appendChild(task);
+    } else {
+        addedTasksUl.appendChild(task);
+    }
 }
 
 function updateCalendar() {

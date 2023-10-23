@@ -59,33 +59,47 @@
                         <p></p>
                     </div>
                     <div class="card">
-                        <h3>Title</h3>
-                        <p>Text...</p>
+                        <h3>Added tasks</h3>
+                        <div>
+                            <ul id="added-tasks">
+
+                            </ul>
+                        </div>
                     </div>
                     <div class="card">
-                        <h3>Title</h3>
-                        <p>Text...</p>
+                        <h3>Scheduled tasks</h3>
+                        <div>
+                            <ul id="scheduled-tasks">
+
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <div class="rightcolumn">
                     <div class="card">
-                        <h4>Add task</h4>
-                        <h5>......</h5><br>
-                        <form>
+                        <h3>Add task</h3><br>
                             <label for="task-name">Task Name:</label><br>
-                            <input type="text" id="task-name" name="tname" class="textbox"><br><br>
+                            <input type="text" id="task-name" class="textbox"><br><br>
                             <label for="task-length">Task Length (hours):</label><br>
-                            <input type="number" id="task-length" name="tlength" class="textbox"><br><br>
-                            <label for="task-duedate">Due Date</label><br>
-                            <input type="date" id="task-duedate" name="tduedate" class="date-input"><br><br>
-                            <input type="submit" value="Submit" id="submit-button" name="tsubmit" onclick="addTask()">
-                        </form>
+                            <input type="number" id="task-length" class="textbox"><br><br>
+                            <!-- <label for="task-duedate">Due Date</label><br>
+                            <input type="date" id="task-duedate" name="tduedate" class="date-input"><br><br> -->
+                            <input type="submit" value="Add task" class="submit-button" onclick="addTask()">
                     </div>
                     <div class="card">
-                        <h3>Title</h3>
-                        <h5>Title description...</h5>
-                        <p>Text...</p>
+                        <h3>Add Scheduled Task</h3>
+                        <h5>Use this to add "scheduled" tasks like sleep, meals, classes, etc.</h5><br>
+                            <label for="sched-task-name">Task Name:</label><br>
+                            <input type="text" id="sched-task-name" class="textbox"><br><br>
+                            <label for="sched-task-start">Task Start Hour (1-24):</label><br>
+                            <input type="number" id="sched-task-start" class="textbox" min="1" max="24"><br><br>
+                            <label for="sched-task-end">Task End Hour (1-24):</label><br>
+                            <input type="number" id="sched-task-end" class="textbox" min="1" max="24"><br><br>
+                            <input type="submit" value="Add scheduled task" id="sched-submit-button" onclick="addScheduledTask()">
+                            <br>
+
+                        <button class="submit-button" onclick="updateGCalendar()">Update Calendar</button>
                     </div>
                 </div>
 
