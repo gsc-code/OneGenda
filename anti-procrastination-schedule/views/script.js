@@ -173,7 +173,7 @@ function addScheduledTask() {
     const taskName = document.getElementById("sched-task-name").value;
     const startHour = parseInt(document.getElementById("sched-task-start").value);
     const endHour = parseInt(document.getElementById("sched-task-end").value);
-    const taskLength = 0;
+    var taskLength = 0;
 
     if (endHour < startHour) {
         newScheduledTask(taskName, 1, endHour);
@@ -188,7 +188,7 @@ function addScheduledTask() {
 }
 
 function addTaskToDB(taskName, taskLength, scheduled) {
-    const task = document.createElement("li");
+    var task = document.createElement("li");
     task.innerHTML = taskName + ": " + taskLength + " hours";
     if (scheduled) {
         scheduledTasksUl.appendChild(task);

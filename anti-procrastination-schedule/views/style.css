@@ -199,8 +199,7 @@ a {
     padding: 20px;
 }
 
-#update-button
-#submit-button {
+.submit-button {
     border-radius: 7px;
     height: 30px;
     width: 100px;
