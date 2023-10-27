@@ -488,6 +488,8 @@ function injectScheduledTasks() {
 
 async function addGEvent(taskName, startHour, endHour) {
     await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest');
+    const token = getWithExpiry("RESPONSE");
+    gapi.client.setToken(token);
 
     var start = startHour;
     var end = endHour;
