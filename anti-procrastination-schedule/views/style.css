@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin&family=IBM+Plex+Sans:wght@200&family=Quicksand:wght@300&display=swap');
+
 body {
     width: 100%;
     background-image: url('https://images8.alphacoders.com/635/635909.jpg');
@@ -6,6 +8,7 @@ body {
     /* https://images.hdqwalls.com/wallpapers/landscape-itlay-forest-mist-mountains-4k-98.jpg */
     /* https://images8.alphacoders.com/635/635909.jpg */
     /* https://images.hdqwalls.com/wallpapers/ocean-view-from-top-ap.jpg */
+    font-family: "IBM Plex Sans", sans-serif;
 }
 
 /* header */
@@ -201,8 +204,7 @@ a {
 
 .submit-button {
     border-radius: 7px;
-    height: 30px;
-    width: 100px;
+    height: 40px;
     padding: 10px;
 }
 

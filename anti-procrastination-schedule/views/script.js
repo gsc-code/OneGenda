@@ -1,6 +1,12 @@
-// Lines 1-170: ruohan's workspace
-// Lines 170+: gary's workspace
+// gary's variables
+const dayHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+var availableHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
+var occupiedHours = [];
+var scheduledTasks = []; //format is [task-name, start-hour, end-hour, etc.]
+var tasks = []; //format is [task-name, hours, etc.]
+var dailySchedule = [];
 
+// ruohan's variables
 // User Info
 var userFullName;
 var userImageURL;
@@ -18,6 +24,7 @@ const userCalendar = document.getElementById("gcalendar");
 const submitBtn = document.getElementById("submit-button");
 const addedTasksUl = document.getElementById("added-tasks");
 const scheduledTasksUl = document.getElementById("scheduled-tasks");
+const updateCalendarBtn = document.getElementById("update-calendar");
 
 
 const clientId = '314363292248-t98fvdcsa4nmf3nnpetvlusg69n8k0bm.apps.googleusercontent.com';
@@ -38,7 +45,6 @@ function signIn() {
 
 async function makeApiCall() {
     await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/people/v1/rest');
-    await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest');
 
     const myProfile = await gapi.client.people.people.get({resourceName: 'people/me', personFields: 'names,photos,emailAddresses'});
 
@@ -58,16 +64,16 @@ async function makeApiCall() {
     setWithExpiry("userImageURL", userImageURL, 3600000);
     setWithExpiry("userEmail", userEmail, 3600000);
 
-    const request = {
-        'calendarId': 'primary',
-        'timeMin': (new Date()).toISOString(),
-        'singleEvents': true,
-        'orderBy': 'startTime',
-        'maxResults': 10,
-    };
+    // const request = {
+    //     'calendarId': 'primary',
+    //     'timeMin': (new Date()).toISOString(),
+    //     'singleEvents': true,
+    //     'orderBy': 'startTime',
+    //     'maxResults': 10,
+    // };
 
-    const response = await gapi.client.calendar.events.list(request);
-    console.log(response);
+    // const response = await gapi.client.calendar.events.list(request);
+    // console.log(response);
 
     /*
     const events = response.result.dashboardContent;
@@ -92,7 +98,7 @@ async function handleCredentialResponse(response) {
     if (response) {
         // signed in
         console.log(response);
-        setWithExpiry("RESPONSE", response, 60000); // actual Google token expires in 3599 seconds (~ 1 hr) = 3599000 ms
+        setWithExpiry("RESPONSE", response, 3599000); // actual Google token expires in 3599 seconds (~ 1 hr) = 3599000 ms
         gapi.client.setToken(response);
         await makeApiCall();
         googleSignin.hidden = true;
@@ -148,7 +154,6 @@ function updateDashboard() {
         calendarButton.hidden = false;
         notSignedIn.setAttribute("style", "display: none");
         dashboardContent.setAttribute("style", "display: block");
-        // submitBtn.addEventListener("click", addTask());
     } else {
         // not signed in
         dashboardButton.hidden = true;
@@ -160,31 +165,49 @@ function updateDashboard() {
     }
 }
 
+// when user clicks on Update Calendar after adding all tasks
+async function updateSched() {
+    await updateGCalendar();
+    // window.location.replace("/calendar.html");
+}
+
 function addTask() {
-    const taskName = document.getElementById("task-name").value;
-    const taskLength = parseInt(document.getElementById("task-length").value);
+    const task = document.getElementById("task-name");
+    const taskName = task.value;
+    const length = document.getElementById("task-length");
+    const taskLength = parseInt(length.value);
     // const taskDueDate = document.getElementById("task-duedate").value;
 
     newTask(taskName, taskLength);
     addTaskToDB(taskName, taskLength, false);
+
+    task.innerHTML = "";
+    length.innerHTML = "";
 }
 
 function addScheduledTask() {
-    const taskName = document.getElementById("sched-task-name").value;
-    const startHour = parseInt(document.getElementById("sched-task-start").value);
-    const endHour = parseInt(document.getElementById("sched-task-end").value);
+    const task = document.getElementById("sched-task-name");
+    const taskName = task.value;
+    const start = document.getElementById("sched-task-start");
+    const startHour = parseInt(start.value);
+    const end = document.getElementById("sched-task-end");
+    const endHour = parseInt(end.value);
     var taskLength = 0;
 
     if (endHour < startHour) {
         newScheduledTask(taskName, 1, endHour);
         newScheduledTask(taskName, startHour, 24);
-        taskLength = (endHour - 1) + (24 - startHour);
+        taskLength = (endHour) + (24 - startHour);
     } else {
         newScheduledTask(taskName, startHour, endHour);
         taskLength = endHour - startHour;
     }
 
     addTaskToDB(taskName, taskLength, true);
+
+    task.innerHTML = "";
+    start.innerHTML = "";
+    end.innerHTML = "";
 }
 
 function addTaskToDB(taskName, taskLength, scheduled) {
@@ -253,20 +276,13 @@ function getWithExpiry(key) {
 
 
 
-
-
 // Algorithmic backend work (gary)
 
 // 10/2 Update: implemented GCalendar event creation and complete schedule generation process
 //              still need to debug GCalendar event creation for any errors
 // also I didnt include than many comments on how the algo works or console logs yet cus messy so sry if its hard to understand
 
-const dayHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
-var availableHours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
-var occupiedHours = [];
-var scheduledTasks = []; //format is [task-name, start-hour, end-hour, etc.]
-var tasks = []; //format is [task-name, hours, etc.]
-var dailySchedule = [];
+// SEE VARIABLES AT VERY TOP
 
 // Test code:
 /*
@@ -421,7 +437,7 @@ function hasConsecutiveHours(array, start, sequenceLength) {
     return false;
 }
 
-function updateGCalendar() {
+async function updateGCalendar() {
     dailySchedule = [];
 
     availableHours = dayHours;
@@ -432,7 +448,7 @@ function updateGCalendar() {
     console.log(newSchedule());
 
     for (let a = 0; a < dailySchedule.length/3; a++) {
-        addGEvent(i*3, i*3 + 1, i*3 + 2);
+        await addGEvent(a*3, a*3 + 1, a*3 + 2);
     }
 }
 
@@ -470,7 +486,8 @@ function injectScheduledTasks() {
     }
 }
 
-function addGEvent(taskName, startHour, endHour) {
+async function addGEvent(taskName, startHour, endHour) {
+    await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest');
 
     var start = startHour;
     var end = endHour;

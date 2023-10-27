@@ -11,7 +11,10 @@
         <!-- possible font (currently not used) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+        <!-- https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200&family=Quicksand:wght@300&display=swap -->
+        <!-- https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap -->
+        <!-- https://fonts.googleapis.com/css2?family=Cabin&family=IBM+Plex+Sans:wght@200&family=Quicksand:wght@300&display=swap -->
 
     </head>
 
@@ -85,7 +88,7 @@
                             <input type="number" id="task-length" class="textbox"><br><br>
                             <!-- <label for="task-duedate">Due Date</label><br>
                             <input type="date" id="task-duedate" name="tduedate" class="date-input"><br><br> -->
-                            <input type="submit" value="Add task" class="submit-button" onclick="addTask()">
+                            <input type="button" value="Add task" class="submit-button" onclick="addTask()">
                     </div>
                     <div class="card">
                         <h3>Add Scheduled Task</h3>
@@ -96,10 +99,10 @@
                             <input type="number" id="sched-task-start" class="textbox" min="1" max="24"><br><br>
                             <label for="sched-task-end">Task End Hour (1-24):</label><br>
                             <input type="number" id="sched-task-end" class="textbox" min="1" max="24"><br><br>
-                            <input type="submit" value="Add scheduled task" class="submit-button" onclick="addScheduledTask()">
+                            <input type="button" value="Add scheduled task" class="submit-button" onclick="addScheduledTask()">
                             <br>
 
-                        <button class="submit-button" onclick="updateGCalendar()">Update Calendar</button>
+                        <button id="update-calendar" class="submit-button" onclick="updateSched()">Update Calendar</button>
                     </div>
                 </div>
 
