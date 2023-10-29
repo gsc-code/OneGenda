@@ -380,6 +380,13 @@ function newTask(taskName, hours) {
     tasks.push(taskName, hours);
 }
 
+function removeTask(index) {
+    var firstHalf = tasks.splice(0, index);
+    var secondHalf = tasks.splice(2, tasks.length - 1);
+
+    tasks = firstHalf.concat(secondHalf);
+}
+
 function sortHours(array) {
     array.sort((a, b) => a - b);
     console.log(array);
@@ -414,6 +421,13 @@ function newScheduledTask(taskName, startHour, endHour) {
         }
     }
     return [taskName, startHour, endHour];
+}
+
+function removeScheduledTask(index) {
+    var firstHalf = scheduledTasks.splice(0, index);
+    var secondHalf = scheduledTasks.splice(3, scheduledTasks.length - 1);
+
+    scheduledTasks = firstHalf.concat(secondHalf);
 }
 
 // min and max parameters are both inclusive
