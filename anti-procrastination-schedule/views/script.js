@@ -547,10 +547,11 @@ async function addGEvent(taskName, startHour, endHour) {
         'calendarId': 'primary',
         'resource': event
       });
-      
+      /*
       request.execute(function(event) {
         appendPre('Event created: ' + event.htmlLink);
       });
+      */
 }
 
 // console.log(calanderList.get());
