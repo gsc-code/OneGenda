@@ -2,7 +2,7 @@
 
 body {
     width: 100%;
-    background-image: url('https://images8.alphacoders.com/635/635909.jpg');
+    background-image: url('https://images.hdqwalls.com/wallpapers/landscape-itlay-forest-mist-mountains-4k-98.jpg');
     background-size: cover;
     /* https://source.unsplash.com/2560x1440/?landscape */
     /* https://images.hdqwalls.com/wallpapers/landscape-itlay-forest-mist-mountains-4k-98.jpg */
@@ -18,7 +18,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 20px 80px;
-    background: whitesmoke;
+    background: rgb(255, 255, 255, 0.6);
     box-shadow: 0 5px 15px rgba(34, 39, 53, 0.06);
     height: 80px;
 }
@@ -170,7 +170,7 @@ a {
 /* Add card effect */
 .card {
     border-radius: 7px;
-    background-color: rgb(255, 255, 255, 0.4);
+    background-color: rgb(255, 255, 255, 0.6);
     padding: 25px;
     margin-top: 40px;
 }
