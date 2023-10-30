@@ -181,8 +181,8 @@ function addTask() {
     newTask(taskName, taskLength);
     addTaskToDB(taskName, taskLength, false);
 
-    task.innerHTML = "";
-    length.innerHTML = "";
+    task.value = "";
+    length.value = "";
 }
 
 function addScheduledTask() {
@@ -212,7 +212,7 @@ function addScheduledTask() {
 
 function addTaskToDB(taskName, taskLength, scheduled) {
     var task = document.createElement("li");
-    task.innerHTML = taskName + ": " + taskLength + " hours";
+    task.innerHTML = "- " + taskName + ": " + taskLength + " hours";
     if (scheduled) {
         scheduledTasksUl.appendChild(task);
     } else {
@@ -462,7 +462,7 @@ async function updateGCalendar() {
     console.log(newSchedule());
 
     for (let a = 0; a < dailySchedule.length/3; a++) {
-        await addGEvent(a*3, a*3 + 1, a*3 + 2);
+        await addGEvent(dailySchedule[a*3], dailySchedule[a*3 + 1], dailySchedule[a*3 + 2]);
     }
 }
 
@@ -496,7 +496,7 @@ function injectScheduledTasks() {
         // appends scheduled task's name, start, and end-hour to tasks list
         dailySchedule.push(taskName);
         dailySchedule.push(startHour);
-        dailySchedule.push(endHour - 1);
+        dailySchedule.push(endHour);
     }
 }
 
@@ -520,21 +520,24 @@ async function addGEvent(taskName, startHour, endHour) {
     // Print the current date and time
     console.log("Current date: " + currentDate);
 
-    const initialTimeInfo = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDay()
+    const initialTimeInfo = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDate()
 
     // adjusts numerical syntax of hours
-    if (start <= 9) {
+    if (start < 10) {
         start = '0' + start;
     }
 
-    if (end <= 9) {
+    if (end < 10) {
         end = '0' + end;
     }
+
+    console.log("Start Hour: " + start);
+    console.log("End Hour: " + end);
 
     const event = {
         'summary': taskName,
         'start': {
-          'dateTime': initialTimeInfo + 'T' + (end + ':00:00') + '-00:00',
+          'dateTime': initialTimeInfo + 'T' + (start + ':00:00') + '-00:00',
           'timeZone': userTimeZone
         },
         'end': {
