@@ -420,6 +420,11 @@ function newScheduledTask(taskName, startHour, endHour) {
             }
         }
     }
+
+    scheduledTasks.push(taskName);
+    scheduledTasks.push(startHour);
+    scheduledTasks.push(endHour);
+
     return [taskName, startHour, endHour];
 }
 
@@ -470,8 +475,8 @@ function injectScheduledTasks() {
     for (let b = 0; b < scheduledTasks.length/3; b++) {
 
         const taskName = scheduledTasks[b*3];
-        const startHour = scheduledTasks[b*3];
-        const endHour = scheduledTasks[b*3];
+        const startHour = scheduledTasks[b*3+1];
+        const endHour = scheduledTasks[b*3+2];
         const taskLength = endHour - startHour;
 
         const index = availableHours.indexOf(startHour)
