@@ -5,6 +5,7 @@ var occupiedHours = [];
 var scheduledTasks = []; //format is [task-name, start-hour, end-hour, etc.]
 var tasks = []; //format is [task-name, hours, etc.]
 var dailySchedule = [];
+var userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 // ruohan's variables
 // User Info
@@ -168,7 +169,7 @@ function updateDashboard() {
 // when user clicks on Update Calendar after adding all tasks
 async function updateSched() {
     await updateGCalendar();
-    // window.location.replace("/calendar.html");
+    window.location.replace("/calendar.html");
 }
 
 function addTask() {
@@ -187,10 +188,10 @@ function addTask() {
 
 function addScheduledTask() {
     const task = document.getElementById("sched-task-name");
-    const taskName = task.value;
     const start = document.getElementById("sched-task-start");
-    const startHour = parseInt(start.value);
     const end = document.getElementById("sched-task-end");
+    const taskName = task.value;
+    const startHour = parseInt(start.value);
     const endHour = parseInt(end.value);
     var taskLength = 0;
 
@@ -205,11 +206,12 @@ function addScheduledTask() {
 
     addTaskToDB(taskName, taskLength, true);
 
-    task.innerHTML = "";
-    start.innerHTML = "";
-    end.innerHTML = "";
+    task.value = "";
+    start.value = "";
+    end.value = "";
 }
 
+// Add list object to card
 function addTaskToDB(taskName, taskLength, scheduled) {
     var task = document.createElement("li");
     task.innerHTML = "- " + taskName + ": " + taskLength + " hours";
@@ -232,7 +234,7 @@ function updateCalendar() {
         notSignedIn.setAttribute("style", "display: none");
         calendarContent.setAttribute("style", "display: block");
 
-        userCalendar.setAttribute("src", "https://calendar.google.com/calendar/embed?src=" + encodeURIComponent(getWithExpiry("userEmail")) + "&ctz=America%2FLos_Angeles");
+        userCalendar.setAttribute("src", "https://calendar.google.com/calendar/embed?src=" + encodeURIComponent(getWithExpiry("userEmail")) + "&ctz=" + encodeURIComponent(userTimeZone));
 
     } else {
         // not signed in
@@ -333,7 +335,7 @@ function newSchedule() {
                 startHour = availableHours[index];
 
                 // identifies ending hour of task based on inputted duration
-                endHour = startHour + taskLength - 1;
+                endHour = startHour + taskLength;
 
                 console.log("index: " + index);
                 console.log("startHour: " + startHour);
@@ -511,36 +513,25 @@ async function addGEvent(taskName, startHour, endHour) {
     gapi.client.setToken(token);
 
     var start = startHour;
-    var end = endHour + 1;
-
-    // Print the user's timezone
-    console.log("User's Timezone: " + userTimeZone);
+    var end = endHour;
 
     // Create a new Date object
     const currentDate = new Date();
-
-    // Create a new instance of Intl.DateTimeFormat
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const timeZoneOffset = currentDate.getTimezoneOffset() / 60;
-
-    if (timeZoneOffset < 0) {
-        timeZoneOffset = '-' + timeZoneOffset;
-    } else {
-        timeZoneOffset = '+' + timeZoneOffset;
-    }
+    
+    // Print the user's timezone
+    console.log("User's Timezone: " + userTimeZone);
 
     // Print the current date and time
     console.log("Current date: " + currentDate);
 
-    const initialTimeInfo = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + (currentDate.getDate() + 1);
+    const initialTimeInfo = toISOStringWithTimezone(currentDate.getHours());
 
     console.log("Initial Time Info: " + initialTimeInfo);
 
-    // adjusts numerical syntax of hours
+    // Adjust numerical syntax of hours
     if (start < 10) {
         start = '0' + start;
     }
-
     if (end < 10) {
         end = '0' + end;
     }
@@ -551,22 +542,39 @@ async function addGEvent(taskName, startHour, endHour) {
     const event = {
         'summary': taskName,
         'start': {
-          'dateTime': initialTimeInfo + 'T' + (start + ':00:00') + timeZoneOffset + '00:00',
+          'dateTime': toISOStringWithTimezone(start),
           'timeZone': userTimeZone
         },
         'end': {
-          'dateTime': initialTimeInfo + 'T' + (end + ':00:00') + timeZoneOffset + '00:00',
+          'dateTime': toISOStringWithTimezone(end),
           'timeZone': userTimeZone
         },
-      };
-      
-      const request = gapi.client.calendar.events.insert({
+    };
+
+    console.log(event);
+    
+    const request = gapi.client.calendar.events.insert({
         'calendarId': 'primary',
         'resource': event
-      });
-      
-      request.execute(function(event) {
+    });
+    
+    request.execute(function(event) {
         console.log('Event created: ' + event.htmlLink);
-      });
+    });
       
 }
+
+// Convert date/hour to ISO format
+function toISOStringWithTimezone(hour) {
+    const date = new Date();
+    const tzOffset = -date.getTimezoneOffset();
+    const diff = tzOffset >= 0 ? '+' : '-';
+    const pad = n => `${Math.floor(Math.abs(n))}`.padStart(2, '0');
+    return date.getFullYear() +
+      '-' + pad(date.getMonth() + 1) +
+      '-' + pad(date.getDate()) +
+      'T' + pad(hour) +
+      ':00:00' +
+      diff + pad(tzOffset / 60) +
+      ':' + pad(tzOffset % 60);
+  };
