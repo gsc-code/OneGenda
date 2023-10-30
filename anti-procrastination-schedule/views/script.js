@@ -511,10 +511,7 @@ async function addGEvent(taskName, startHour, endHour) {
     gapi.client.setToken(token);
 
     var start = startHour;
-    var end = endHour;
-
-    // Create a new instance of Intl.DateTimeFormat
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var end = endHour + 1;
 
     // Print the user's timezone
     console.log("User's Timezone: " + userTimeZone);
@@ -522,10 +519,20 @@ async function addGEvent(taskName, startHour, endHour) {
     // Create a new Date object
     const currentDate = new Date();
 
+    // Create a new instance of Intl.DateTimeFormat
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const timeZoneOffset = currentDate.getTimezoneOffset() / 60;
+
+    if (timeZoneOffset < 0) {
+        timeZoneOffset = '-' + timeZoneOffset;
+    } else {
+        timeZoneOffset = '+' + timeZoneOffset;
+    }
+
     // Print the current date and time
     console.log("Current date: " + currentDate);
 
-    const initialTimeInfo = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
+    const initialTimeInfo = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + (currentDate.getDate() + 1);
 
     console.log("Initial Time Info: " + initialTimeInfo);
 
@@ -544,11 +551,11 @@ async function addGEvent(taskName, startHour, endHour) {
     const event = {
         'summary': taskName,
         'start': {
-          'dateTime': initialTimeInfo + 'T' + (start + ':00:00') + '-00:00',
+          'dateTime': initialTimeInfo + 'T' + (start + ':00:00') + timeZoneOffset + '00:00',
           'timeZone': userTimeZone
         },
         'end': {
-          'dateTime': initialTimeInfo + 'T' + (end + ':00:00') + '-00:00',
+          'dateTime': initialTimeInfo + 'T' + (end + ':00:00') + timeZoneOffset + '00:00',
           'timeZone': userTimeZone
         },
       };
