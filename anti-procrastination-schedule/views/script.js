@@ -522,6 +522,8 @@ async function addGEvent(taskName, startHour, endHour) {
 
     const initialTimeInfo = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDate()
 
+    console.log("Initial Time Info: " + initialTimeInfo);
+
     // adjusts numerical syntax of hours
     if (start < 10) {
         start = '0' + start;
@@ -550,10 +552,9 @@ async function addGEvent(taskName, startHour, endHour) {
         'calendarId': 'primary',
         'resource': event
       });
-
+      /*
       request.execute(function(event) {
         console.log('Event created: ' + event.htmlLink);
       });
+      */
 }
-
-// console.log(calendarList.get());
