@@ -520,7 +520,7 @@ async function addGEvent(taskName, startHour, endHour) {
     // Print the current date and time
     console.log("Current date: " + currentDate);
 
-    const initialTimeInfo = currentDate.getFullYear() + '-' + currentDate.getMonth() + '-' + currentDate.getDate()
+    const initialTimeInfo = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
 
     console.log("Initial Time Info: " + initialTimeInfo);
 
@@ -552,9 +552,9 @@ async function addGEvent(taskName, startHour, endHour) {
         'calendarId': 'primary',
         'resource': event
       });
-      /*
+      
       request.execute(function(event) {
         console.log('Event created: ' + event.htmlLink);
       });
-      */
+      
 }
