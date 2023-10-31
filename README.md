@@ -1,7 +1,7 @@
-# APS
+# OneGenda
 
 ## Description
-### Anti-Procrastination Schedule (APS)
+### OneGenda
 See our website, https://unique-pixel-396900.uw.r.appspot.com, for a description of our project and team! (No, this is not a scam. We just haven't applied for a unique domain yet.)
 
 ## How to clone a GitHub repository
