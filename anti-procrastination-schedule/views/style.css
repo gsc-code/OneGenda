@@ -16,7 +16,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 20px 80px;
-    background: rgb(255, 255, 255, 0.6);
+    background: rgb(255, 255, 255, 0.7);
     box-shadow: 0 5px 15px rgba(34, 39, 53, 0.06);
     height: 80px;
 }
@@ -134,12 +134,13 @@ ul {
 
 .description {
     border-radius: 7px;
-    display: flex;
+    display: block;
+    text-align: center;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 8%;
-    margin: 50px 25%;
-    background: rgb(255, 255, 255, 0.4);
+    padding: 20px 5%;
+    margin: 50px 20%;
+    background: rgb(255, 255, 255, 0.7);
 }
 
 .separator {
@@ -168,7 +169,7 @@ ul {
 /* Add card effect */
 .card {
     border-radius: 7px;
-    background-color: rgb(255, 255, 255, 0.6);
+    background-color: rgb(255, 255, 255, 0.7);
     padding: 25px;
     margin-top: 40px;
 }
